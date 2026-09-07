@@ -230,6 +230,11 @@
       // util/ folders are role-named without the util- prefix their npm names carry,
       // so these aliases stay hand-written like dsh-util-crypto above.
       "@deepseek-ai/dsh-util-time": ["./packages/util/time/src"],
+      // workforce/session-events carries the group name in its npm package
+      // name (dsh-workforce-session-events) but not in its directory
+      // (session-events), so the generated aliases below cannot map it;
+      // stays hand-written like the sdk/ and util/ entries above.
+      "@deepseek-ai/dsh-workforce-session-events": ["./packages/workforce/session-events/src"],
       // BEGIN generated package aliases — pnpm run gen-tsconfig-paths
       "@deepseek-ai/dsh-acp": ["./packages/acp/acp/src"],
       "@deepseek-ai/dsh-acp-app": ["./packages/bundle/acp-app/src"],

@@ -1699,6 +1699,10 @@ importers:
         version: link:../../core/system-prompt
 
   packages/bundle/workforce-global:
+    dependencies:
+      '@deepseek-ai/dsh-workforce-session-events':
+        specifier: workspace:^
+        version: link:../../workforce/session-events
     devDependencies:
       '@deepseek-ai/cordis':
         specifier: workspace:^
@@ -9876,6 +9880,31 @@ importers:
       tsx:
         specifier: ^4.19.2
         version: 4.22.4
+
+  packages/workforce/session-events:
+    dependencies:
+      '@reactorjet/workforce-contracts':
+        specifier: link:../../../../workforce-platform/packages/contracts
+        version: link:../../../../workforce-platform/packages/contracts
+      zod:
+        specifier: ^4.4.3
+        version: 4.4.3
+    devDependencies:
+      '@deepseek-ai/cordis':
+        specifier: workspace:^
+        version: link:../../../vendor/cordis
+      '@deepseek-ai/dsh-session':
+        specifier: workspace:^
+        version: link:../../core/session
+      '@deepseek-ai/dsh-session-persistence':
+        specifier: workspace:^
+        version: link:../../session/session-persistence
+      '@deepseek-ai/dsh-session-persistence-jsonl':
+        specifier: workspace:^
+        version: link:../../session/session-persistence-jsonl
+      '@deepseek-ai/dsh-session-projection':
+        specifier: workspace:^
+        version: link:../../session/session-projection
 
   packages/workspace/workspace:
     dependencies:

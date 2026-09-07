@@ -33,6 +33,9 @@
       "patch": "./cordis.patch.yml"
     }
   },
+  "dependencies": {
+    "@deepseek-ai/dsh-workforce-session-events": "workspace:^"
+  },
   "peerDependencies": {
     "@deepseek-ai/cordis": "workspace:^",
     "@deepseek-ai/dsh-base": "workspace:^"
