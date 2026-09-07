@@ -10,6 +10,7 @@ import {
 } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { withFileLock } from '@deepseek-ai/dsh-atomic-write'
 import { afterAll, describe, expect, it } from 'vitest'
 import {
@@ -226,6 +227,24 @@ describe('loadProfile', () => {
       .toEqual([...PROFILE_TEMPLATES.web?.bundles ?? []])
     expect(readProfileManifest('t', resolveProfileDir('web', home)).dsh?.profile?.patchReload)
       .toBe('live')
+  })
+
+  it('resolves every shipped PROFILE_TEMPLATES bundle against the real dsh installation anchor', () => {
+    // The staged `stageInstallation()` anchor above cannot catch a shipped
+    // template naming a bundle apps/cli never installs: Node's real
+    // `resolve.paths` walk only finds a package that is actually a workspace
+    // dependency of apps/cli/package.json (and therefore linked into
+    // apps/cli/node_modules), which a synthetic fixture anchor cannot
+    // reproduce. `dsh --profile <name>` resolves every bundle from this
+    // exact file, so this is the one anchor whose resolution failure means
+    // the shipped profile cannot actually boot.
+    const realAnchor = fileURLToPath(new URL('../../../../apps/cli/package.json', import.meta.url))
+    const home = tmp()
+    for (const name of Object.keys(PROFILE_TEMPLATES)) {
+      const profile = loadProfile('t', name, realAnchor, home)
+      expect(profile.layers.map(layer => layer.packageName)).toEqual(PROFILE_TEMPLATES[name]?.bundles)
+      for (const layer of profile.layers) expect(existsSync(layer.packageDir)).toBe(true)
+    }
   })
 
   it('normalizes only the exact installation-owned headless bundle tuple', () => {

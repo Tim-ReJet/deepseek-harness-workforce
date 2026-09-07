@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-09-07-workforce-global-profile-bundle.md
-2026-09-07-workforce-global-profile-bundle.md: 158d97db15939ac2e83fc6959c298ded862e95f2
-2026-09-07-workforce-global-profile-bundle.zh.md: 4787fedef6822f52597ad3114173b9e1b716a6d1
+2026-09-07-workforce-global-profile-bundle.md: 51b5a3f35026ac7cbfc3cd5d704f9e2691d7e63a
+2026-09-07-workforce-global-profile-bundle.zh.md: a22c310e042fa4cda27a26aa040df0d2db8718f1
