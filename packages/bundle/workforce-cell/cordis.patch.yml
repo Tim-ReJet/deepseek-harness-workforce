@@ -1,0 +1,19 @@
+# The dsh-workforce-cell bundle patch: the Workforce Cell profile layer,
+# stacked over dsh-base + dsh-headless (a disposable Cell answers one
+# delegated task and exits, so the one-shot headless runner is the closest
+# existing shipped shape to "Cell DSH essentials" — not the persistent
+# web/HTTP host). This layer is intentionally empty today — it exists so
+# `dsh --profile workforce-cell` resolves and boots a real, named profile
+# before any Cell-owned plugin exists to populate it. Later Cell tasks
+# (@workforce/execution-cell's Task/Gate/Loop runtime, CELL-002; the
+# ActionIntent-to-nono bridge, BRIDGE-001) add their own `insert` rows here
+# once those packages exist; do not add a @workforce/* dependency ahead of
+# the package that justifies it (an unresolvable workspace dependency breaks
+# `pnpm install` for the whole repository).
+#
+# This bundle is deliberately nono-oblivious: ADR-006 encloses Cell DSH with
+# nono as an external process boundary (PID 1 / supervisor), not a library
+# the Cell links against, so this package must never gain nono-specific code
+# — enclosure is nono's job, from outside the process (invariant 7).
+
+[]

@@ -280,6 +280,7 @@
     { "path": "./packages/bundle/sdk-app" },
     { "path": "./packages/bundle/sdk-minimal" },
     { "path": "./packages/bundle/web-app" },
+    { "path": "./packages/bundle/workforce-cell" },
     { "path": "./packages/bundle/workforce-global" },
     { "path": "./packages/workforce/session-events" },
     { "path": "./packages/boot/app-boot" },
