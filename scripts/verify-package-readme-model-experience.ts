@@ -131,6 +131,7 @@ const SENTENCE_MODEL_EXPERIENCE: Readonly<Record<string, SentenceContract>> = {
   'packages/bundle/headless': { kind: 'none', reason: 'The one-shot runner submits the task as an ordinary user message; prompts and tools belong to the composed base and headless bundles.' },
   'packages/bundle/workforce-global': { kind: 'none', reason: 'The patch list is empty today; it registers no rows and delegates no model-facing behavior until later Workforce plugins populate it.' },
   'packages/bundle/workforce-cell': { kind: 'none', reason: 'The patch list is empty today; it registers no rows and delegates no model-facing behavior until later Cell plugins populate it.' },
+  'packages/workforce/session-events': { kind: 'none', reason: 'The package appends a durable log event and folds a host-side projection; it registers no prompt, tool schema, or other model-visible surface of its own.' },
   'packages/llm/llm': { kind: 'none', reason: 'The adapter registry forwards already-assembled requests unchanged.' },
   'packages/llm/token-meter': { kind: 'indirect', reason: 'The measurement service leaves model-visible changes to its consumers.' },
   'packages/lsp/lsp': { kind: 'indirect', reason: 'The provider registry delegates model rendering to dsh-tool-lsp.' },
