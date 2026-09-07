@@ -33,6 +33,12 @@
       "path": "../../packages/bundle/web-app"
     },
     {
+      "path": "../../packages/bundle/workforce-cell"
+    },
+    {
+      "path": "../../packages/bundle/workforce-global"
+    },
+    {
       "path": "../../packages/host/webserver"
     },
     {

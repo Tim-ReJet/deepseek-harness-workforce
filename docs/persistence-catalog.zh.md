@@ -1075,3 +1075,23 @@ export type SessionEvent<T extends SessionEventType = SessionEventType> = {
 ```
 
 来源：[`packages/web/web-search-deepseek/src/provider.ts:83`](../packages/web/web-search-deepseek/src/provider.ts)
+
+### `workforce/*`
+
+<a id="workforceworkorder-bound--log-only"></a>
+
+#### `workforce/workorder-bound` — log-only
+
+```ts persistence-catalog
+/**
+ * Records which canonical WorkOrder (`biro.workorder/v2`,
+ * `@reactorjet/workforce-contracts`) this Session is bound to: the
+ * WorkOrder's id and content digest, plus the resolved
+ * `workforce.execution-profile/v1` binding in force at bind time.
+ * Biro issues and owns WorkOrder; this event only records a reference
+ * to it, never a copy of its objective, scope, or acceptance state.
+ */
+'workforce/workorder-bound': WorkforceWorkOrderBoundEvent
+```
+
+来源：[`packages/workforce/session-events/src/domain.ts:39`](../packages/workforce/session-events/src/domain.ts)

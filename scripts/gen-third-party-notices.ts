@@ -76,6 +76,10 @@ const OVERRIDES: Record<string, { license?: string; repo?: string }> = {
   'node-addon-require-builtin': { repo: 'https://www.npmjs.com/package/node-addon-require-builtin' },
   // No `license` field in the published manifest; the tarball's LICENSE.txt is the MIT text.
   'fs-ext': { license: 'MIT' },
+  // Private, unpublished sibling package (workforce-platform/packages/contracts,
+  // consumed via a `link:` dependency, DSH-002) — no npm `license` field and
+  // no public repository; its owning workspace root declares ISC.
+  '@reactorjet/workforce-contracts': { license: 'ISC', repo: 'private — workforce-platform/packages/contracts (not publicly published)' },
 }
 
 /**

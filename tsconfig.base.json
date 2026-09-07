@@ -230,6 +230,11 @@
       // util/ folders are role-named without the util- prefix their npm names carry,
       // so these aliases stay hand-written like dsh-util-crypto above.
       "@deepseek-ai/dsh-util-time": ["./packages/util/time/src"],
+      // workforce/session-events carries the group name in its npm package
+      // name (dsh-workforce-session-events) but not in its directory
+      // (session-events), so the generated aliases below cannot map it;
+      // stays hand-written like the sdk/ and util/ entries above.
+      "@deepseek-ai/dsh-workforce-session-events": ["./packages/workforce/session-events/src"],
       // BEGIN generated package aliases — pnpm run gen-tsconfig-paths
       "@deepseek-ai/dsh-acp": ["./packages/acp/acp/src"],
       "@deepseek-ai/dsh-acp-app": ["./packages/bundle/acp-app/src"],
@@ -429,6 +434,8 @@
       "@deepseek-ai/dsh-workflow": ["./packages/workflow/workflow/src"],
       "@deepseek-ai/dsh-workflow/invariant": ["./packages/workflow/workflow/src/invariant.ts"],
       "@deepseek-ai/dsh-workflow-worker-thread": ["./packages/workflow/workflow-worker-thread/src"],
+      "@deepseek-ai/dsh-workforce-cell": ["./packages/bundle/workforce-cell/src"],
+      "@deepseek-ai/dsh-workforce-global": ["./packages/bundle/workforce-global/src"],
       "@deepseek-ai/dsh-workspace": ["./packages/workspace/workspace/src"],
       "@deepseek-ai/dsh-workspace/invariant": ["./packages/workspace/workspace/src/invariant.ts"]
       // END generated package aliases
