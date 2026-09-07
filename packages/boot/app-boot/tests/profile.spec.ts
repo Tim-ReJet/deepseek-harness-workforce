@@ -213,6 +213,10 @@ describe('loadProfile', () => {
       bundles: ['@deepseek-ai/dsh-sdk-minimal'],
       patchReload: 'startup',
     })
+    expect(PROFILE_TEMPLATES['workforce-global']).toEqual({
+      bundles: ['@deepseek-ai/dsh-base', '@deepseek-ai/dsh-workforce-global'],
+      patchReload: 'startup',
+    })
     try {
       loadProfile('t', 'web', anchor, home)
     } catch {

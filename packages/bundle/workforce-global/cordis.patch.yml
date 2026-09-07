@@ -1,0 +1,11 @@
+# The dsh-workforce-global bundle patch: the Workforce global profile layer,
+# stacked over dsh-base. This layer is intentionally empty today — it exists
+# so `dsh --profile workforce-global` resolves and boots a real, named
+# profile before any Workforce-owned plugin exists to populate it. Later
+# Workforce tasks (starting with the durable SessionEvent extension package)
+# add their own `insert` rows here once those packages exist; do not add a
+# @workforce/* dependency ahead of the package that justifies it (an
+# unresolvable workspace dependency breaks `pnpm install` for the whole
+# repository).
+
+[]
