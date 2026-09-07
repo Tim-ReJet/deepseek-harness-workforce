@@ -43,7 +43,11 @@ kind: "package-reference"
 ### 入口点
 
 ```ts
+import type { Session } from '@deepseek-ai/dsh-session'
 import { bindWorkOrder } from '@deepseek-ai/dsh-workforce-session-events'
+
+declare const session: Session
+declare const candidateWorkOrder: unknown
 
 const event = bindWorkOrder(session, candidateWorkOrder)
 // event.data: { workOrderId, workOrderDigest, profileVersion, boundAt }
@@ -52,7 +56,15 @@ const event = bindWorkOrder(session, candidateWorkOrder)
 `candidateWorkOrder` 在追加任何内容之前会先对照规范的 `workOrder` schema（`@reactorjet/workforce-contracts`）进行解析——校验失败的候选值会抛出异常，Session 的 `seq` 保持不变。通过投影接口读回当前绑定：
 
 ```ts
-const binding = ctx.sessionProjections.stateOf(session, 'workforceSessionBinding').current
+import type { Context } from '@deepseek-ai/cordis'
+import type { Session } from '@deepseek-ai/dsh-session'
+import type {} from '@deepseek-ai/dsh-session-projection'
+import type {} from '@deepseek-ai/dsh-workforce-session-events'
+
+declare const ctx: Context
+declare const session: Session
+
+const binding = ctx.sessionProjections.stateOf(session, 'workforceSessionBinding')?.current
 // { workOrderId, workOrderDigest, profileVersion, boundAt } | null
 ```
 
