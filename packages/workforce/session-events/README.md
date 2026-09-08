@@ -43,7 +43,11 @@ The package takes no configuration: it registers the `workforceSessionBinding` p
 ### Entry point
 
 ```ts
+import type { Session } from '@deepseek-ai/dsh-session'
 import { bindWorkOrder } from '@deepseek-ai/dsh-workforce-session-events'
+
+declare const session: Session
+declare const candidateWorkOrder: unknown
 
 const event = bindWorkOrder(session, candidateWorkOrder)
 // event.data: { workOrderId, workOrderDigest, profileVersion, boundAt }
@@ -52,7 +56,15 @@ const event = bindWorkOrder(session, candidateWorkOrder)
 `candidateWorkOrder` is parsed against the canonical `workOrder` schema (`@reactorjet/workforce-contracts`) before anything is appended — a candidate that fails validation throws and the Session's `seq` is unchanged. Read the current binding back through the projection seam:
 
 ```ts
-const binding = ctx.sessionProjections.stateOf(session, 'workforceSessionBinding').current
+import type { Context } from '@deepseek-ai/cordis'
+import type { Session } from '@deepseek-ai/dsh-session'
+import type {} from '@deepseek-ai/dsh-session-projection'
+import type {} from '@deepseek-ai/dsh-workforce-session-events'
+
+declare const ctx: Context
+declare const session: Session
+
+const binding = ctx.sessionProjections.stateOf(session, 'workforceSessionBinding')?.current
 // { workOrderId, workOrderDigest, profileVersion, boundAt } | null
 ```
 
