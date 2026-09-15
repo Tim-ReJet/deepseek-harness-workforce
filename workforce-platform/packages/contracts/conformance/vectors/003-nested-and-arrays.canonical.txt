@@ -1,1 +1,0 @@
-{"id":"delegation-plan-1","risk":{"class":"low","findings":[]},"workstreams":[{"id":"ws-2","objective":"second"},{"id":"ws-1","objective":"first"}]}

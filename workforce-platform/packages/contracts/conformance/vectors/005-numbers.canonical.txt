@@ -1,1 +1,0 @@
-{"fraction":0.5,"large":9007199254740991,"negative":-42,"zero":0}

@@ -18,9 +18,8 @@
  * `composeEntries` (the exact function the profile launcher calls to build
  * the row set it mounts) yields a row set identical to `dsh-base` +
  * `dsh-headless` alone; (3) a real Cordis `Context` + `Loader` + `Include`
- * mounts this bundle's real (empty) patch file as a second layer over an
- * already-settled fixture layer and reaches ready with no thrown error and
- * no row added, changed, or removed.
+ * mounts this bundle's patch, resolves tool admission, and denies a tool call
+ * in `tools/pre-execute` when sealed plan/workerId are absent.
  */
 
 import { execFile } from 'node:child_process'
@@ -103,26 +102,28 @@ describe('dsh-workforce-cell bundle', () => {
         'export function apply(ctx) { ctx.provide(\'probeService\'); ctx.set(\'probeService\', \'ready\') }',
         '',
       ].join('\n'))
-      writeFileSync(join(dir, 'tools-stub.mjs'), [
-        'export const name = \'tools-stub\'',
-        'export function apply(ctx) {',
-        '  ctx.provide(\'tools\')',
-        '  ctx.set(\'tools\', { get: () => undefined })',
-        '}',
-        '',
-      ].join('\n'))
       writeFileSync(join(dir, 'root.yml'), '[]\n')
       writeFileSync(join(dir, 'boot.mjs'), [
         'import { Context } from \'@deepseek-ai/cordis\'',
         'import Loader from \'@deepseek-ai/cordis-plugin-loader\'',
         'import Include, { entryListSchema } from \'@deepseek-ai/cordis-plugin-include\'',
+        'import { mountAgentLoopTestDependencies } from \'@deepseek-ai/dsh-agent-loop-testkit\'',
+        'import { ToolCallId } from \'@deepseek-ai/dsh-llm\'',
+        'import { defineContentToolFixture } from \'@deepseek-ai/dsh-tools\'',
         'import { readFileSync } from \'node:fs\'',
         'import * as yaml from \'js-yaml\'',
+        '',
+        'process.env.WORKFORCE_CELL_TOOL_PROJECTIONS_JSON = JSON.stringify({',
+        '  write_file: { semanticAction: \'scm.repository.write\', targetType: \'filesystem\', pathArgument: \'path\' },',
+        '})',
+        'delete process.env.WORKFORCE_CELL_DELEGATION_PLAN_JSON',
+        'delete process.env.WORKFORCE_CELL_WORKER_ID',
         '',
         'const cellPatchPath = process.argv[2]',
         'const cellPatches = yaml.load(readFileSync(cellPatchPath, \'utf8\'), { schema: entryListSchema })',
         '',
         'const ctx = new Context()',
+        'await mountAgentLoopTestDependencies(ctx)',
         'await ctx.plugin(Loader)',
         'ctx.loader.builtins.include = Include',
         'await ctx.loader.create({',
@@ -132,7 +133,6 @@ describe('dsh-workforce-cell bundle', () => {
         '    patches: [',
         '      { insert: [',
         '        { id: \'probe\', name: new URL(\'./probe-row.mjs\', import.meta.url).href },',
-        '        { id: \'tools-stub\', name: new URL(\'./tools-stub.mjs\', import.meta.url).href },',
         '      ] },',
         '      ...cellPatches,',
         '    ],',
@@ -141,6 +141,22 @@ describe('dsh-workforce-cell bundle', () => {
         'await ctx.loader.await()',
         '',
         'if (ctx.get(\'probeService\') !== \'ready\') throw new Error(\'probeService not ready\')',
+        'ctx.tools.register(defineContentToolFixture({',
+        '  name: \'write_file\',',
+        '  description: \'boot probe\',',
+        '  parameters: {},',
+        '  async execute() { return [{ type: \'text\', text: \'must-not-run\' }] }',
+        '}))',
+        'const result = await ctx.tools.execute({',
+        '  signal: AbortSignal.timeout(5000),',
+        '  callId: ToolCallId(\'boot-deny\'),',
+        '  name: \'write_file\',',
+        '  arguments: { path: \'packages/api/main.ts\' },',
+        '})',
+        'const text = result.content[0]?.text ?? \'\'',
+        'if (!result.isError || !String(text).includes(\'DelegationPlan\')) {',
+        '  throw new Error(`expected pre-execute deny for missing plan/workerId, got ${JSON.stringify(result)}`)',
+        '}',
         'await ctx.fiber.dispose()',
         'process.stdout.write(\'OK\')',
         '',

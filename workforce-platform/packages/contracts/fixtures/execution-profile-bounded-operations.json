@@ -1,7 +1,0 @@
-{
-  "schema": "workforce.execution-profile/v1",
-  "profileId": "bounded-operations",
-  "profileVersion": 1,
-  "executionExperience": "Adds explicitly scoped external operations, such as creating PRs, updating selected records, or sending permitted messages. Each controlled operation uses current authorization and appropriate recovery semantics.",
-  "acceptanceBehavior": "Use the receipts, readback, or checks appropriate to the operation. Routine operations stay automatic inside the grant."
-}

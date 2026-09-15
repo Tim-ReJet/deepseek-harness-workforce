@@ -6,7 +6,7 @@
 # `@deepseek-ai/dsh-workforce-tool-admission`. Later Cell tasks
 # (@workforce/execution-cell Task/Gate/Loop, CELL-002) may add rows; do not
 # add unrelated @workforce/* workspace links (they break `pnpm install` when
-# the sibling mirror is missing).
+# the sibling `workforce-platform` checkout is missing — see packages/workforce/WORKFORCE_PLATFORM.md).
 #
 # This bundle is deliberately nono-oblivious: ADR-006 encloses Cell DSH with
 # nono as an external process boundary (PID 1 / supervisor), not a library

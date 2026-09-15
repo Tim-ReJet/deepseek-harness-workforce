@@ -19,9 +19,9 @@ export interface Config {
   enabled?: boolean
   /** Compiled NONO-002 capability manifest for this Cell generation. */
   manifest: CapabilityManifest
-  /** Sealed delegation plan for ownedPaths checks; omit to skip ownedPaths gate. */
+  /** Sealed delegation plan for ADR-029 ownedPaths; required at runtime when admission is enabled. */
   delegationPlan?: DelegationPlan
-  /** Worker id within `delegationPlan.workers`; required when `delegationPlan` is set. */
+  /** Worker id within `delegationPlan.workers`; required at runtime when admission is enabled. */
   workerId?: string
   workOrderId: string
   runId: string

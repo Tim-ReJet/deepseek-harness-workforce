@@ -1,8 +1,6 @@
 packages:
   - vendor/*
   - packages/*/*
-  # Sibling mirror of Tim-ReJet/workforce-platform for @workforce/* link deps (see workforce-platform/README in repo).
-  - workforce-platform/packages/*
   # The Landlock launcher is developed with its harness consumers but keeps
   # its native build and publication scripts under native/landlock-run.
   - native/landlock-run

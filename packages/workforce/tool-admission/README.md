@@ -9,7 +9,7 @@ English | [中文](README.zh.md)
 
 ## Summary
 
-`dsh-workforce-tool-admission` implements plan 16's in-process half inside the harness: each tool call is projected to a Workforce `ActionIntent`, checked through `@workforce/dsh-nono-bridge` (`checkActionIntent` / `checkActionIntentWithOwnedPaths` when a sealed `DelegationPlan` and `workerId` are configured), and denied in `tools/pre-execute` before the tool body runs when the bridge returns `allowed: false`. It does not call MCP servers or nono's live supervisor; it compares against the Cell's already-compiled `CapabilityManifest` and sealed path ownership only.
+`dsh-workforce-tool-admission` implements plan 16's in-process half inside the harness: each tool call is projected to a Workforce `ActionIntent`, checked through `@workforce/dsh-nono-bridge` **`checkActionIntentWithOwnedPaths` only** (sealed `DelegationPlan` + `workerId` required when admission is enabled — no manifest-only fallback), and denied in `tools/pre-execute` before the tool body runs when the bridge returns `allowed: false`. It does not call MCP servers or nono's live supervisor; it compares against the Cell's already-compiled `CapabilityManifest` and sealed path ownership only.
 
 ## Use this package
 
@@ -17,7 +17,7 @@ Mount it on the `workforce-cell` profile (via `@deepseek-ai/dsh-workforce-cell`)
 
 ## Config
 
-See `Config` in [`src/config.ts`](src/config.ts): `manifest`, `projections`, `workOrderId`/`runId`/`cellId`/`taskId`, optional `delegationPlan` + `workerId` for ownedPaths.
+See `Config` in [`src/config.ts`](src/config.ts): `manifest`, `projections`, `workOrderId`/`runId`/`cellId`/`taskId`, and `delegationPlan` + `workerId` (required at runtime when `enabled` — missing values deny every tool call).
 
 ## Model Experience
 
@@ -26,7 +26,7 @@ Denied calls return `Error: Workforce tool admission denied: …` as the tool re
 ## Known Limitations and Deferred Work
 
 - **Projections are config-owned**, not yet read from ToolDefinition metadata; expand the projection table as tools ship on the Cell profile.
-- **Requires a sibling `workforce-platform` checkout** at `workforce-platform/` (or repo parent) for `@workforce/*` link dependencies.
+- **Requires a sibling `workforce-platform` checkout** — see [WORKFORCE_PLATFORM.md](../WORKFORCE_PLATFORM.md) (`fd38001` pin).
 
 ## Dev Note
 

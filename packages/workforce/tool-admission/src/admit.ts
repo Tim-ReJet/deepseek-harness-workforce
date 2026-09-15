@@ -6,7 +6,6 @@
 
 import type { ActionIntent } from '@reactorjet/workforce-contracts'
 import {
-  checkActionIntent,
   checkActionIntentWithOwnedPaths,
   type CheckActionIntentResult,
 } from '@workforce/dsh-nono-bridge'
@@ -24,13 +23,17 @@ export function admitProjectedActionIntent(
   runtime: WorkforceAdmissionRuntime,
   intent: ActionIntent,
 ): CheckActionIntentResult {
-  if (runtime.delegationPlan !== undefined && runtime.workerId !== undefined) {
-    return checkActionIntentWithOwnedPaths({
-      intent,
-      manifest: runtime.manifest,
-      delegationPlan: runtime.delegationPlan,
-      workerId: runtime.workerId,
-    })
+  if (runtime.delegationPlan === undefined || runtime.workerId === undefined) {
+    return {
+      allowed: false,
+      reason:
+        'sealed DelegationPlan and workerId are required for tool admission (ADR-029); manifest-only checkActionIntent is not permitted when admission is enabled.',
+    }
   }
-  return checkActionIntent(intent, runtime.manifest)
+  return checkActionIntentWithOwnedPaths({
+    intent,
+    manifest: runtime.manifest,
+    delegationPlan: runtime.delegationPlan,
+    workerId: runtime.workerId,
+  })
 }

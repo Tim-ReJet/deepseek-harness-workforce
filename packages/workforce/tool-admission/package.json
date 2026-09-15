@@ -33,9 +33,9 @@
   },
   "dependencies": {
     "@deepseek-ai/schemastery": "workspace:^",
-    "@reactorjet/workforce-contracts": "link:../../../workforce-platform/packages/contracts",
-    "@workforce/dsh-nono-bridge": "link:../../../workforce-platform/packages/dsh-nono-bridge",
-    "@workforce/permit-compiler": "link:../../../workforce-platform/packages/permit-compiler"
+    "@reactorjet/workforce-contracts": "link:../../../../workforce-platform/packages/contracts",
+    "@workforce/dsh-nono-bridge": "link:../../../../workforce-platform/packages/dsh-nono-bridge",
+    "@workforce/permit-compiler": "link:../../../../workforce-platform/packages/permit-compiler"
   },
   "devDependencies": {
     "@deepseek-ai/cordis": "workspace:^",

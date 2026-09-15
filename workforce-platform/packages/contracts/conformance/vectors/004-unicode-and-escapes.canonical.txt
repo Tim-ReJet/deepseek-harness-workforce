@@ -1,1 +1,0 @@
-{"emoji":"😀","note":"café — quotes \" and backslash \\ and newline \n end"}
