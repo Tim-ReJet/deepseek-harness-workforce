@@ -1,0 +1,66 @@
+{
+  "schema": "workforce.execution-permit/v1",
+  "id": "permit-01",
+  "workOrder": {
+    "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "delegationPlan": {
+    "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+  },
+  "subject": {
+    "spiffeId": "spiffe://staging.workforce.biroworks.com/tenant/acme/cell/01JCELL/generation/1",
+    "cellId": "01JCELL",
+    "generation": 1,
+    "runtimeCompositionDigest": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+  },
+  "grant": {
+    "capabilities": [
+      "scm.repository.read",
+      "scm.repository.write",
+      "process.execute.development",
+      "scm.branch.push",
+      "scm.pull_request.create"
+    ],
+    "effects": [
+      {
+        "effectClass": "scm.pull_request.create",
+        "target": "github://acme/biro"
+      }
+    ],
+    "budget": {
+      "currency": "USD",
+      "capMinorUnits": 1500
+    },
+    "delegationDepthRemaining": 1,
+    "networkAccess": [
+      {
+        "destination": "registry.npmjs.org",
+        "purpose": "dependency installation"
+      }
+    ]
+  },
+  "conditions": {
+    "requiredIsolation": "STANDARD",
+    "stepUpRequiredFor": [
+      "scm.pull_request.merge",
+      "service.production.deploy"
+    ],
+    "evidenceObligations": [
+      "nono.audit",
+      "github.readback",
+      "test.results"
+    ]
+  },
+  "policyDecisionDigest": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+  "validity": {
+    "notBefore": "2026-08-28T08:05:00Z",
+    "expiresAt": "2026-08-28T10:05:00Z",
+    "nonce": "nonce-01"
+  },
+  "issuedBy": {
+    "id": "permit-issuer",
+    "kind": "service",
+    "issuer": "spiffe://staging.workforce.biroworks.com"
+  },
+  "signature": "example-signature"
+}

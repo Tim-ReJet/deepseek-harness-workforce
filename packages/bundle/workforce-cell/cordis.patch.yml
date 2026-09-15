@@ -2,18 +2,29 @@
 # stacked over dsh-base + dsh-headless (a disposable Cell answers one
 # delegated task and exits, so the one-shot headless runner is the closest
 # existing shipped shape to "Cell DSH essentials" — not the persistent
-# web/HTTP host). This layer is intentionally empty today — it exists so
-# `dsh --profile workforce-cell` resolves and boots a real, named profile
-# before any Cell-owned plugin exists to populate it. Later Cell tasks
-# (@workforce/execution-cell's Task/Gate/Loop runtime, CELL-002; the
-# ActionIntent-to-nono bridge, BRIDGE-001) add their own `insert` rows here
-# once those packages exist; do not add a @workforce/* dependency ahead of
-# the package that justifies it (an unresolvable workspace dependency breaks
-# `pnpm install` for the whole repository).
+# web/HTTP host). Plan 16 in-process tool admission is mounted here via
+# `@deepseek-ai/dsh-workforce-tool-admission`. Later Cell tasks
+# (@workforce/execution-cell Task/Gate/Loop, CELL-002) may add rows; do not
+# add unrelated @workforce/* workspace links (they break `pnpm install` when
+# the sibling mirror is missing).
 #
 # This bundle is deliberately nono-oblivious: ADR-006 encloses Cell DSH with
 # nono as an external process boundary (PID 1 / supervisor), not a library
 # the Cell links against, so this package must never gain nono-specific code
 # — enclosure is nono's job, from outside the process (invariant 7).
 
-[]
+- insert:
+    # Plan 16 in-process seam: tool call → ActionIntent → dsh-nono-bridge admit → dispatch.
+    - id: workforce-tool-admission
+      name: '@deepseek-ai/dsh-workforce-tool-admission'
+      config:
+        # Cell launcher supplies manifest, sealed DelegationPlan, ids, and projections at boot.
+        enabled: !!js "true"
+        manifest: !!js "process.env.WORKFORCE_CELL_CAPABILITY_MANIFEST_JSON ? JSON.parse(process.env.WORKFORCE_CELL_CAPABILITY_MANIFEST_JSON) : { $schema: 'https://nono.sh/schemas/capability-manifest.schema.json', version: '0.1.0', network: { mode: 'blocked' } }"
+        delegationPlan: !!js "process.env.WORKFORCE_CELL_DELEGATION_PLAN_JSON ? JSON.parse(process.env.WORKFORCE_CELL_DELEGATION_PLAN_JSON) : undefined"
+        workerId: !!js "process.env.WORKFORCE_CELL_WORKER_ID || undefined"
+        workOrderId: !!js "process.env.WORKFORCE_CELL_WORK_ORDER_ID || '01JWORK0000000000000000000'"
+        runId: !!js "process.env.WORKFORCE_CELL_RUN_ID || '01JRUN00000000000000000000'"
+        cellId: !!js "process.env.WORKFORCE_CELL_ID || '01JCELL0000000000000000000'"
+        taskId: !!js "process.env.WORKFORCE_CELL_TASK_ID || '01JTASK0000000000000000000'"
+        projections: !!js "process.env.WORKFORCE_CELL_TOOL_PROJECTIONS_JSON ? JSON.parse(process.env.WORKFORCE_CELL_TOOL_PROJECTIONS_JSON) : {}"

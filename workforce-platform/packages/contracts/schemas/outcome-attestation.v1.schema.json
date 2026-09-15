@@ -1,0 +1,215 @@
+{
+  "$ref": "#/definitions/OutcomeAttestation",
+  "definitions": {
+    "OutcomeAttestation": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "workforce.outcome-attestation/v1"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workOrder": {
+          "type": "object",
+          "properties": {
+            "digest": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "digest"
+          ],
+          "additionalProperties": false
+        },
+        "run": {
+          "$ref": "#/definitions/OutcomeAttestation/properties/workOrder"
+        },
+        "verdict": {
+          "type": "string",
+          "enum": [
+            "PASS",
+            "FAIL",
+            "INDETERMINATE"
+          ]
+        },
+        "assertions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "assertionId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "result": {
+                "$ref": "#/definitions/OutcomeAttestation/properties/verdict"
+              },
+              "evidenceRefs": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/OutcomeAttestation/properties/workOrder"
+                }
+              }
+            },
+            "required": [
+              "assertionId",
+              "result",
+              "evidenceRefs"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "policyCompliance": {
+          "type": "object",
+          "properties": {
+            "result": {
+              "$ref": "#/definitions/OutcomeAttestation/properties/verdict"
+            },
+            "findings": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "result",
+            "findings"
+          ],
+          "additionalProperties": false
+        },
+        "effects": {
+          "type": "object",
+          "properties": {
+            "verified": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "effectId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "receiptRef": {
+                    "$ref": "#/definitions/OutcomeAttestation/properties/workOrder"
+                  }
+                },
+                "required": [
+                  "effectId",
+                  "receiptRef"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "prohibited": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "unresolved": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "verified",
+            "prohibited",
+            "unresolved"
+          ],
+          "additionalProperties": false
+        },
+        "residualFindings": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "evidenceRoot": {
+          "$ref": "#/definitions/OutcomeAttestation/properties/workOrder/properties/digest"
+        },
+        "policyDecisionDigest": {
+          "$ref": "#/definitions/OutcomeAttestation/properties/workOrder/properties/digest"
+        },
+        "issuedAt": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,9})?(Z|[+-]\\d{2}:\\d{2})$"
+        },
+        "issuedBy": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "kind": {
+              "type": "string",
+              "enum": [
+                "human",
+                "service",
+                "agent"
+              ]
+            },
+            "issuer": {
+              "type": "string",
+              "minLength": 1
+            },
+            "tenantId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "organisationId": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "id",
+            "kind",
+            "issuer"
+          ],
+          "additionalProperties": false
+        },
+        "signature": {
+          "type": "string",
+          "minLength": 1
+        },
+        "extensions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {}
+          }
+        }
+      },
+      "required": [
+        "schema",
+        "id",
+        "workOrder",
+        "run",
+        "verdict",
+        "assertions",
+        "policyCompliance",
+        "effects",
+        "residualFindings",
+        "evidenceRoot",
+        "policyDecisionDigest",
+        "issuedAt",
+        "issuedBy",
+        "signature"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

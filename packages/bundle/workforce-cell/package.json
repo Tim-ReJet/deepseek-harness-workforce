@@ -1,6 +1,6 @@
 {
   "name": "@deepseek-ai/dsh-workforce-cell",
-  "description": "The empty Workforce Cell profile layer over dsh-base + dsh-headless, ready for later Cell packages to stack onto",
+  "description": "Workforce Cell profile layer over dsh-base + dsh-headless with in-process tool-call ActionIntent admission",
   "version": "0.1.3-alpha.1",
   "publishConfig": {
     "access": "public"
@@ -45,6 +45,8 @@
     "@deepseek-ai/dsh-app-boot": "workspace:^",
     "@deepseek-ai/dsh-base": "workspace:^",
     "@deepseek-ai/dsh-headless": "workspace:^",
-    "js-yaml": "^4.2.0"
+    "@deepseek-ai/dsh-workforce-tool-admission": "workspace:^",
+    "js-yaml": "^4.2.0",
+    "tsx": "^4.22.4"
   }
 }

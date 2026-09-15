@@ -1,0 +1,11 @@
+{
+  "schema": "workforce.effect-receipt/v1",
+  "id": "effect-receipt-01",
+  "effectIntent": {
+    "digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+  },
+  "state": "COMMITTED",
+  "providerId": "github-mcp",
+  "externalEffectId": "push-01",
+  "digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444"
+}

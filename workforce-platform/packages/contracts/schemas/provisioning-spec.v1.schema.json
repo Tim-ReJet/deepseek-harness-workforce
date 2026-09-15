@@ -1,0 +1,254 @@
+{
+  "$ref": "#/definitions/ProvisioningSpec",
+  "definitions": {
+    "ProvisioningSpec": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "workforce.provisioning-spec/v1"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workOrder": {
+          "type": "object",
+          "properties": {
+            "digest": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "digest"
+          ],
+          "additionalProperties": false
+        },
+        "delegationPlan": {
+          "$ref": "#/definitions/ProvisioningSpec/properties/workOrder"
+        },
+        "runtime": {
+          "type": "object",
+          "properties": {
+            "distribution": {
+              "type": "string",
+              "minLength": 1
+            },
+            "compositionDigest": {
+              "$ref": "#/definitions/ProvisioningSpec/properties/workOrder/properties/digest"
+            },
+            "orchestrator": {
+              "type": "string",
+              "minLength": 1
+            },
+            "agentProviders": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "plugins": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "distribution",
+            "compositionDigest",
+            "orchestrator",
+            "agentProviders",
+            "plugins"
+          ],
+          "additionalProperties": false
+        },
+        "workload": {
+          "type": "object",
+          "properties": {
+            "provider": {
+              "type": "string",
+              "minLength": 1
+            },
+            "isolationClass": {
+              "type": "string",
+              "minLength": 1
+            },
+            "cpu": {
+              "type": "string",
+              "minLength": 1
+            },
+            "memory": {
+              "type": "string",
+              "minLength": 1
+            },
+            "storage": {
+              "type": "string",
+              "minLength": 1
+            },
+            "lifetimeSeconds": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            }
+          },
+          "required": [
+            "provider",
+            "isolationClass",
+            "cpu",
+            "memory",
+            "storage",
+            "lifetimeSeconds"
+          ],
+          "additionalProperties": false
+        },
+        "authority": {
+          "type": "object",
+          "properties": {
+            "provider": {
+              "type": "string",
+              "minLength": 1
+            },
+            "manifestDigest": {
+              "$ref": "#/definitions/ProvisioningSpec/properties/workOrder/properties/digest"
+            }
+          },
+          "required": [
+            "provider",
+            "manifestDigest"
+          ],
+          "additionalProperties": false
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "admissionId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "admissionId",
+              "name"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "network": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "minLength": 1
+              },
+              "resources": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "kind",
+              "resources"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "credentials": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "brokerKey": {
+                "type": "string",
+                "minLength": 1
+              },
+              "usage": {
+                "type": "string",
+                "minLength": 1
+              },
+              "audience": {
+                "type": "string",
+                "minLength": 1
+              },
+              "operations": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "maxTtlSeconds": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "exposure": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "brokerKey",
+              "usage",
+              "audience",
+              "operations",
+              "maxTtlSeconds",
+              "exposure"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "digest": {
+          "$ref": "#/definitions/ProvisioningSpec/properties/workOrder/properties/digest"
+        },
+        "extensions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {}
+          }
+        }
+      },
+      "required": [
+        "schema",
+        "id",
+        "workOrder",
+        "delegationPlan",
+        "runtime",
+        "workload",
+        "authority",
+        "tools",
+        "network",
+        "credentials",
+        "evidence",
+        "digest"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

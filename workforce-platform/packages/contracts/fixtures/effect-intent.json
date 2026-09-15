@@ -1,0 +1,22 @@
+{
+  "schema": "workforce.effect-intent/v1",
+  "id": "effect-intent-01",
+  "actionIntent": {
+    "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+  },
+  "effectClass": "scm.branch.push",
+  "effectVersion": 1,
+  "target": {
+    "type": "scm.branch",
+    "id": "refs/heads/feat/example",
+    "version": "abc123"
+  },
+  "desiredChange": {
+    "toSha": "deadbeef"
+  },
+  "preconditions": [],
+  "idempotencyKey": "wo-01:scm.branch.push:refs/heads/feat/example:deadbeef",
+  "reversibility": "conditional",
+  "requiredCapabilities": ["scm.branch.push"],
+  "digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+}

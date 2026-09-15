@@ -1,0 +1,37 @@
+{
+  "schema": "workforce.agent-message/v1",
+  "messageId": "message-01",
+  "threadId": "thread-01",
+  "sender": {
+    "schema": "workforce.agent-instance-ref/v1",
+    "principal": {
+      "id": "agent-coder-01",
+      "kind": "agent",
+      "issuer": "biro://tenant/acme/agents",
+      "tenantId": "acme"
+    },
+    "instanceId": "instance-01",
+    "generation": 3,
+    "activatedAt": "2026-09-07T08:00:00Z"
+  },
+  "recipient": {
+    "schema": "workforce.agent-instance-ref/v1",
+    "principal": {
+      "id": "agent-ceo-01",
+      "kind": "agent",
+      "issuer": "biro://tenant/acme/agents",
+      "tenantId": "acme"
+    },
+    "instanceId": "instance-02",
+    "generation": 1,
+    "activatedAt": "2026-09-07T07:55:00Z"
+  },
+  "sentAt": "2026-09-07T08:05:00Z",
+  "deliveryStatus": "delivered",
+  "permittedPayloadRefs": [
+    {
+      "mediaType": "application/json",
+      "digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444"
+    }
+  ]
+}

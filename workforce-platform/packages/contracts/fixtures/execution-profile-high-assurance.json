@@ -1,0 +1,7 @@
+{
+  "schema": "workforce.execution-profile/v1",
+  "profileId": "high-assurance",
+  "profileVersion": 1,
+  "executionExperience": "The same work model with additional mandatory restrictions selected for the workload or deployment. It grants no extra authority by itself.",
+  "acceptanceBehavior": "Require the named independent checks, protected evidence, signatures, approvals, or stronger isolation. Do not enable every possible control merely because this preset is selected."
+}

@@ -1,0 +1,16 @@
+{
+  "schema": "workforce.policy-decision/v1",
+  "decision": "ALLOW",
+  "constraints": [],
+  "obligations": [],
+  "reasons": [
+    {
+      "code": "MATCHED_RULE",
+      "message": "workorder_owner_delegation_actions allowed plan on workforce:delegation"
+    }
+  ],
+  "policyVersion": "default",
+  "policyDigest": "sha256:7777777777777777777777777777777777777777777777777777777777777777",
+  "cerbosCallId": "01JCERBOSCALL0000000000000",
+  "decidedAt": "2026-09-07T08:05:00Z"
+}

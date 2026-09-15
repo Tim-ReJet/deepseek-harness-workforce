@@ -1,0 +1,94 @@
+{
+  "schema": "biro.workorder/v2",
+  "id": "01JABCDEF0123456789ABCDEFG",
+  "version": 1,
+  "tenantId": "tenant-acme",
+  "organisationId": "org-acme",
+  "issuedBy": {
+    "id": "user-tim",
+    "kind": "human",
+    "issuer": "https://auth.example.com",
+    "tenantId": "tenant-acme",
+    "organisationId": "org-acme"
+  },
+  "objective": {
+    "goal": "Add organisation-level project filtering",
+    "outcomes": [
+      {
+        "id": "outcome-1",
+        "description": "Users see projects for the selected organisation only"
+      }
+    ],
+    "context": "Repository change requested from a tracked issue",
+    "nonGoals": [
+      "Do not merge or deploy to production"
+    ]
+  },
+  "scope": {
+    "targets": [
+      {
+        "kind": "github.repository",
+        "id": "github://acme/biro"
+      }
+    ],
+    "constraints": [
+      {
+        "id": "c1",
+        "type": "must",
+        "condition": "Preserve tenant isolation",
+        "reason": "Cross-tenant access is prohibited"
+      }
+    ]
+  },
+  "authorityCeiling": {
+    "capabilities": [
+      "scm.repository.read",
+      "scm.repository.write",
+      "scm.branch.push",
+      "scm.pull_request.create"
+    ],
+    "prohibited": [
+      "scm.pull_request.merge",
+      "service.production.deploy"
+    ]
+  },
+  "resources": {
+    "budget": {
+      "currency": "USD",
+      "capMinorUnits": 2000
+    },
+    "deadline": "2026-08-29T12:00:00Z"
+  },
+  "acceptance": {
+    "assertions": [
+      {
+        "id": "a1",
+        "proposition": "Organisation filtering behaves correctly",
+        "criticality": "REQUIRED"
+      },
+      {
+        "id": "a2",
+        "proposition": "Tenant isolation remains intact",
+        "criticality": "REQUIRED"
+      }
+    ]
+  },
+  "accountability": {
+    "owner": {
+      "id": "user-tim",
+      "kind": "human",
+      "issuer": "https://auth.example.com"
+    },
+    "approvalPolicies": [
+      "policy://org-acme/repository-change"
+    ]
+  },
+  "lifecycle": {
+    "mode": "one-shot"
+  },
+  "provenance": {
+    "source": "github-issue",
+    "createdAt": "2026-08-28T08:00:00Z"
+  },
+  "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+}

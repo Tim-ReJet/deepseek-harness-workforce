@@ -1,0 +1,139 @@
+{
+  "$ref": "#/definitions/EvidenceIndex",
+  "definitions": {
+    "EvidenceIndex": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "workforce.evidence-index/v1"
+        },
+        "workOrderId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "runId": {
+          "$ref": "#/definitions/EvidenceIndex/properties/workOrderId"
+        },
+        "cellId": {
+          "$ref": "#/definitions/EvidenceIndex/properties/workOrderId"
+        },
+        "agency": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "producer": {
+                "type": "string",
+                "minLength": 1
+              },
+              "digest": {
+                "type": "string",
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "producer",
+              "digest"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "enforcement": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EvidenceIndex/properties/agency/items"
+          }
+        },
+        "workload": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EvidenceIndex/properties/agency/items"
+          }
+        },
+        "effects": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "digest": {
+                "$ref": "#/definitions/EvidenceIndex/properties/agency/items/properties/digest"
+              }
+            },
+            "required": [
+              "digest"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "evaluations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EvidenceIndex/properties/effects/items"
+          }
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EvidenceIndex/properties/effects/items"
+          }
+        },
+        "requiredProducerStatus": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "producer": {
+                "type": "string",
+                "minLength": 1
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "PRESENT",
+                  "MISSING",
+                  "PARTIAL"
+                ]
+              }
+            },
+            "required": [
+              "producer",
+              "status"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "rootDigest": {
+          "$ref": "#/definitions/EvidenceIndex/properties/agency/items/properties/digest"
+        },
+        "extensions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {}
+          }
+        }
+      },
+      "required": [
+        "schema",
+        "workOrderId",
+        "runId",
+        "cellId",
+        "agency",
+        "enforcement",
+        "workload",
+        "effects",
+        "evaluations",
+        "children",
+        "requiredProducerStatus",
+        "rootDigest"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

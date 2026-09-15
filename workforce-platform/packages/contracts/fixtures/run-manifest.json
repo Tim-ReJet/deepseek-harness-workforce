@@ -1,0 +1,89 @@
+{
+  "schema": "workforce.run-manifest/v1",
+  "id": "run-01",
+  "version": 1,
+  "createdAt": "2026-08-28T08:00:00Z",
+  "producer": {
+    "id": "workforce-runner",
+    "kind": "service",
+    "issuer": "spiffe://staging.workforce.biroworks.com"
+  },
+  "workOrder": {
+    "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "plan": {
+    "digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+  },
+  "permit": {
+    "digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+  },
+  "cell": {
+    "cellId": "cell-01",
+    "generation": 1,
+    "workloadId": "workload-01"
+  },
+  "runtimeCompositionDigest": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "status": "sealed",
+  "childRuns": [],
+  "resourceConsumption": {
+    "cpu": "1200m",
+    "memory": "512Mi",
+    "duration": 184.5
+  },
+  "evidenceIndex": {
+    "schema": "workforce.evidence-index/v1",
+    "workOrderId": "workorder-01",
+    "runId": "run-01",
+    "cellId": "cell-01",
+    "agency": [
+      {
+        "producer": "dsh-agent",
+        "digest": "sha256:6666666666666666666666666666666666666666666666666666666666666666"
+      }
+    ],
+    "enforcement": [
+      {
+        "producer": "nono",
+        "digest": "sha256:7777777777777777777777777777777777777777777777777777777777777777",
+        "mediaType": "application/json"
+      }
+    ],
+    "workload": [
+      {
+        "producer": "kubernetes",
+        "digest": "sha256:8888888888888888888888888888888888888888888888888888888888888888"
+      }
+    ],
+    "effects": [
+      {
+        "digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999"
+      }
+    ],
+    "evaluations": [
+      {
+        "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    ],
+    "children": [
+      {
+        "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+      }
+    ],
+    "requiredProducerStatus": [
+      {
+        "producer": "dsh-agent",
+        "status": "PRESENT"
+      },
+      {
+        "producer": "nono",
+        "status": "PRESENT"
+      }
+    ],
+    "rootDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "closureState": "closed",
+  "eventRootDigest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+  "effectRootDigest": "sha256:1010101010101010101010101010101010101010101010101010101010101010",
+  "evidenceRootDigest": "sha256:2020202020202020202020202020202020202020202020202020202020202020",
+  "digest": "sha256:3030303030303030303030303030303030303030303030303030303030303030"
+}

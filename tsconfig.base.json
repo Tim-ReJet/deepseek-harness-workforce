@@ -235,6 +235,7 @@
       // (session-events), so the generated aliases below cannot map it;
       // stays hand-written like the sdk/ and util/ entries above.
       "@deepseek-ai/dsh-workforce-session-events": ["./packages/workforce/session-events/src"],
+      "@deepseek-ai/dsh-workforce-tool-admission": ["./packages/workforce/tool-admission/src"],
       // BEGIN generated package aliases — pnpm run gen-tsconfig-paths
       "@deepseek-ai/dsh-acp": ["./packages/acp/acp/src"],
       "@deepseek-ai/dsh-acp-app": ["./packages/bundle/acp-app/src"],

@@ -1,0 +1,20 @@
+{
+  "name": "@workforce/workorder-protocol",
+  "version": "1.0.0",
+  "description": "workorder/v1 protocol — the canonical Biro↔Workforce seam contract",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}

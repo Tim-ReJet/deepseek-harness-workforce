@@ -1,0 +1,7 @@
+{
+  "workOrder": "wo-1",
+  "grant": {
+    "capabilities": ["x", "y"],
+    "budget": 100
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "workforce.cell-coordination-board/v1",
+  "id": "01JBOARD00000000000000000001",
+  "cellId": "01JCELL",
+  "runId": "01JRUN00000000000000000001",
+  "delegationPlanDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "boardDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "revision": 3,
+  "pathMirror": [
+    {
+      "path": "packages/api/",
+      "ownerWorkerId": "worker-api",
+      "source": "delegation-plan"
+    },
+    {
+      "path": "packages/web/",
+      "ownerWorkerId": "worker-web",
+      "source": "delegation-plan"
+    }
+  ],
+  "tickets": [
+    {
+      "id": "ticket-1",
+      "title": "Implement API filter endpoint",
+      "status": "done",
+      "priority": 1,
+      "assignee": {
+        "agentInstanceId": "01JAGENTAPI",
+        "workerId": "worker-api"
+      },
+      "dependsOn": [],
+      "ownedPathHints": ["packages/api/"],
+      "reportTaskResult": {
+        "outcome": "success",
+        "reportedAt": "2026-09-14T12:00:00Z",
+        "commitSha": "abc1234def5678901234567890abcdef12345678",
+        "evidence": [
+          {
+            "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "mediaType": "application/json"
+          }
+        ],
+        "summary": "Unit tests green; no permit fields in board payload"
+      }
+    },
+    {
+      "id": "ticket-2",
+      "title": "Wire UI to filtered projects",
+      "status": "in_progress",
+      "priority": 2,
+      "assignee": {
+        "agentInstanceId": "01JAGENTWEB",
+        "workerId": "worker-web"
+      },
+      "dependsOn": ["ticket-1"],
+      "ownedPathHints": ["packages/web/"]
+    }
+  ],
+  "residualLocks": [],
+  "pendingProposals": []
+}

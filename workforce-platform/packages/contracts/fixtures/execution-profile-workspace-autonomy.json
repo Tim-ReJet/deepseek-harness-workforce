@@ -1,0 +1,7 @@
+{
+  "schema": "workforce.execution-profile/v1",
+  "profileId": "workspace-autonomy",
+  "profileVersion": 1,
+  "executionExperience": "Broad activity within allocated repositories, documents, scratch storage, compute, and configured network/model access. Scripts, experiments, dependency installation, and internal delegation do not require repeated permission requests.",
+  "acceptanceBehavior": "Deliver artifacts and the specified practical checks. Same-run verification is allowed. No universal independent attestation."
+}

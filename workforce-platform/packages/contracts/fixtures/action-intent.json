@@ -1,0 +1,22 @@
+{
+  "schema": "workforce.action-intent/v1",
+  "id": "action-intent-01",
+  "workOrderId": "workorder-01",
+  "runId": "run-01",
+  "cellId": "01JCELL",
+  "taskId": "task-01",
+  "semanticAction": "scm.repository.write",
+  "target": {
+    "type": "scm.repository",
+    "id": "github://acme/biro"
+  },
+  "parameters": {
+    "branch": "feat/example"
+  },
+  "toolBinding": {
+    "toolName": "git",
+    "version": "2.43.0"
+  },
+  "createdAt": "2026-08-28T08:04:00Z",
+  "digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444"
+}

@@ -1,0 +1,76 @@
+{
+  "schema": "workforce.provisioning-spec/v1",
+  "id": "provision-01",
+  "workOrder": {
+    "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "delegationPlan": {
+    "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+  },
+  "runtime": {
+    "distribution": "workforce-cell-dsh",
+    "compositionDigest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+    "orchestrator": "workforce-native",
+    "agentProviders": [
+      "dsh-native",
+      "codex"
+    ],
+    "plugins": [
+      "workforce-cell",
+      "workforce-nono-bridge",
+      "workforce-evidence"
+    ]
+  },
+  "workload": {
+    "provider": "kubernetes",
+    "isolationClass": "STANDARD",
+    "cpu": "4",
+    "memory": "8Gi",
+    "storage": "20Gi",
+    "lifetimeSeconds": 7200
+  },
+  "authority": {
+    "provider": "nono",
+    "manifestDigest": "sha256:4444444444444444444444444444444444444444444444444444444444444444"
+  },
+  "tools": [
+    {
+      "admissionId": "tool-git",
+      "name": "git"
+    },
+    {
+      "admissionId": "tool-typecheck",
+      "name": "pnpm"
+    }
+  ],
+  "network": [
+    {
+      "kind": "public-egress",
+      "resources": [
+        "github.com",
+        "registry.npmjs.org"
+      ]
+    }
+  ],
+  "credentials": [
+    {
+      "id": "cred-github",
+      "brokerKey": "github/execution-app",
+      "usage": "http-header",
+      "audience": "github://acme/biro",
+      "operations": [
+        "scm.branch.push",
+        "scm.pull_request.create"
+      ],
+      "maxTtlSeconds": 1800,
+      "exposure": "proxy-only"
+    }
+  ],
+  "evidence": [
+    "dsh.session-events",
+    "nono.audit",
+    "kubernetes.workload",
+    "github.effect-readback"
+  ],
+  "digest": "sha256:5555555555555555555555555555555555555555555555555555555555555555"
+}

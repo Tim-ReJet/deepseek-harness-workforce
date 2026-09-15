@@ -25,6 +25,7 @@ The workforce group records Workforce-specific durable Session state — today, 
 | Package | Role | ctx key |
 |---|---|---|
 | [`session-events`](session-events/README.md) | Durable `workforce/workorder-bound` SessionEvent and its `workforceSessionBinding` projection | registers on `ctx.sessionProjections` |
+| [`tool-admission`](tool-admission/README.md) | In-process tool-call → ActionIntent projection and `@workforce/dsh-nono-bridge` pre-execute admission | `tools/pre-execute` listener |
 
 -----
 

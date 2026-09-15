@@ -37,7 +37,7 @@
     "@deepseek-ai/cordis": "workspace:^"
   },
   "dependencies": {
-    "@reactorjet/workforce-contracts": "link:../../../../workforce-platform/packages/contracts",
+    "@reactorjet/workforce-contracts": "link:../../../workforce-platform/packages/contracts",
     "zod": "^4.4.3"
   },
   "devDependencies": {

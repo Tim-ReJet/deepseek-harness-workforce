@@ -283,6 +283,7 @@
     { "path": "./packages/bundle/workforce-cell" },
     { "path": "./packages/bundle/workforce-global" },
     { "path": "./packages/workforce/session-events" },
+    { "path": "./packages/workforce/tool-admission" },
     { "path": "./packages/boot/app-boot" },
     { "path": "./packages/boot/cmdline" },
     { "path": "./packages/sdk/server" },

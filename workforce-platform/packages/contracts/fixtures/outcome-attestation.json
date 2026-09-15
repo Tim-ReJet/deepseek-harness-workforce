@@ -1,0 +1,57 @@
+{
+  "schema": "workforce.outcome-attestation/v1",
+  "id": "attestation-01",
+  "workOrder": {
+    "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "run": {
+    "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+  },
+  "verdict": "PASS",
+  "assertions": [
+    {
+      "assertionId": "a1",
+      "result": "PASS",
+      "evidenceRefs": [
+        {
+          "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+        }
+      ]
+    },
+    {
+      "assertionId": "a2",
+      "result": "PASS",
+      "evidenceRefs": [
+        {
+          "digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+        }
+      ]
+    }
+  ],
+  "policyCompliance": {
+    "result": "PASS",
+    "findings": []
+  },
+  "effects": {
+    "verified": [
+      {
+        "effectId": "effect-pr-01",
+        "receiptRef": {
+          "digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444"
+        }
+      }
+    ],
+    "prohibited": [],
+    "unresolved": []
+  },
+  "residualFindings": [],
+  "evidenceRoot": "sha256:5555555555555555555555555555555555555555555555555555555555555555",
+  "policyDecisionDigest": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+  "issuedAt": "2026-08-28T09:00:00Z",
+  "issuedBy": {
+    "id": "outcome-attestor",
+    "kind": "service",
+    "issuer": "spiffe://staging.workforce.biroworks.com"
+  },
+  "signature": "example-signature"
+}

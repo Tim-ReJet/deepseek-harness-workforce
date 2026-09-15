@@ -1,0 +1,22 @@
+{
+  "name": "@workforce/dsh-nono-bridge",
+  "version": "0.1.0",
+  "description": "Maps a DSH ActionIntent's semanticAction to nono capability strings (smallest first ship: scm.repository.*/process.execute.* only, no live DSH/nono).",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@reactorjet/workforce-contracts": "workspace:*",
+    "@workforce/cell-coordination-board": "workspace:*",
+    "@workforce/permit-compiler": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}

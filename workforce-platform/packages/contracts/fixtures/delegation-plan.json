@@ -1,0 +1,61 @@
+{
+  "schema": "workforce.delegation-plan/v1",
+  "id": "delegation-01",
+  "workOrder": {
+    "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "revision": 1,
+  "workers": [
+    {
+      "id": "worker-api",
+      "assignee": {
+        "agentInstanceId": "01JAGENTAPI",
+        "role": "implementer"
+      },
+      "ownedPaths": ["packages/api/", "packages/api/**"]
+    },
+    {
+      "id": "worker-web",
+      "assignee": {
+        "agentInstanceId": "01JAGENTWEB",
+        "role": "implementer"
+      },
+      "ownedPaths": ["packages/web/", "packages/web/**"]
+    }
+  ],
+  "workstreams": [
+    {
+      "id": "inspect",
+      "objective": "Inspect current architecture and baseline behavior"
+    },
+    {
+      "id": "implement",
+      "objective": "Implement organisation filtering"
+    },
+    {
+      "id": "validate",
+      "objective": "Validate type, behavior and tenant isolation"
+    }
+  ],
+  "requiredGates": [
+    "typecheck",
+    "unit-tests",
+    "tenant-isolation",
+    "browser-behavior"
+  ],
+  "recursion": {
+    "maxIterations": 10,
+    "maxChildDepth": 1,
+    "noProgressThreshold": 3
+  },
+  "effectEnvelope": [
+    "scm.branch.push",
+    "scm.pull_request.create"
+  ],
+  "compensationRequirements": [],
+  "risk": {
+    "class": "MEDIUM",
+    "findings": []
+  },
+  "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+}
