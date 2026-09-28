@@ -93,6 +93,11 @@ jobs:
       - name: Install (immutable)
         run: pnpm install --frozen-lockfile
 
+      - uses: ./.github/actions/install-workforce-platform-sibling
+        if: >-
+          github.event_name == 'pull_request'
+          && github.event.pull_request.base.ref == 'workforce/main'
+
       - name: Run static gates
         env:
           DSH_ARCHIVE_BASE_REF: ${{ github.event.pull_request.base.sha }}
@@ -166,6 +171,11 @@ jobs:
           wait "$sandbox_pid" || sandbox_status=$?
           if (( install_status != 0 )); then exit "$install_status"; fi
           exit "$sandbox_status"
+
+      - uses: ./.github/actions/install-workforce-platform-sibling
+        if: >-
+          github.event_name == 'pull_request'
+          && github.event.pull_request.base.ref == 'workforce/main'
 
       - name: Run exhaustive coverage
         run: pnpm run check:ci:coverage
@@ -253,6 +263,11 @@ jobs:
           if (( install_status != 0 )); then exit "$install_status"; fi
           exit "$sandbox_status"
 
+      - uses: ./.github/actions/install-workforce-platform-sibling
+        if: >-
+          github.event_name == 'pull_request'
+          && github.event.pull_request.base.ref == 'workforce/main'
+
       - name: Install Playwright Chromium and hosted dependencies
         if: vars.DSH_CI_FAILOVER_LINUX != 'selfhosted' || github.event.pull_request.user.login == 'dependabot[bot]'
         run: pnpm --filter @deepseek-ai/dsh-web-frontend exec playwright install --with-deps chromium
@@ -318,6 +333,11 @@ jobs:
 
       - name: Install (immutable)
         run: pnpm install --frozen-lockfile
+
+      - uses: ./.github/actions/install-workforce-platform-sibling
+        if: >-
+          github.event_name == 'pull_request'
+          && github.event.pull_request.base.ref == 'workforce/main'
 
       - name: Run compatibility smokes
         env:
@@ -511,6 +531,10 @@ jobs:
           } else {
             pnpm install --frozen-lockfile
           }
+      - uses: ./.github/actions/install-workforce-platform-sibling
+        if: >-
+          github.event_name == 'pull_request'
+          && github.event.pull_request.base.ref == 'workforce/main'
       - name: Run blocking Windows builds
         shell: pwsh
         run: pnpm run check:ci:windows-blocking
@@ -579,6 +603,10 @@ jobs:
           } else {
             pnpm install --frozen-lockfile
           }
+      - uses: ./.github/actions/install-workforce-platform-sibling
+        if: >-
+          github.event_name == 'pull_request'
+          && github.event.pull_request.base.ref == 'workforce/main'
       # No build before coverage, matching the Linux lane: workspace imports
       # resolve to src through the tsconfig paths map, and the lib-consuming
       # suites (webworker-packer image-loadable, webworker-runtime
@@ -640,6 +668,10 @@ jobs:
           } else {
             pnpm install --frozen-lockfile
           }
+      - uses: ./.github/actions/install-workforce-platform-sibling
+        if: >-
+          github.event_name == 'pull_request'
+          && github.event.pull_request.base.ref == 'workforce/main'
       - name: Run Windows-specific native tests
         shell: pwsh
         run: >-
@@ -697,6 +729,10 @@ jobs:
           } else {
             pnpm install --frozen-lockfile
           }
+      - uses: ./.github/actions/install-workforce-platform-sibling
+        if: >-
+          github.event_name == 'pull_request'
+          && github.event.pull_request.base.ref == 'workforce/main'
       - name: Run Windows observational gates
         shell: pwsh
         run: pnpm run check:ci:windows-observational

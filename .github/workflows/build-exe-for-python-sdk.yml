@@ -207,6 +207,12 @@ jobs:
       - name: Install (immutable)
         run: pnpm install --frozen-lockfile
 
+      - uses: ./.github/actions/install-workforce-platform-sibling
+        if: >-
+          inputs.ci
+          && github.event_name == 'pull_request'
+          && github.event.pull_request.base.ref == 'workforce/main'
+
       - name: Rebuild Linux node-pty against manylinux 2.28
         if: runner.os == 'Linux'
         env:
