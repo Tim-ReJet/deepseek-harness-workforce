@@ -14,4 +14,4 @@ kind: "library"
 ## Known Limitations and Deferred Work
 
 - **投影由配置拥有**，尚未从 ToolDefinition 元数据读取；Cell profile 上的工具需扩展投影表。
-- **依赖 sibling `workforce-platform` 检出** — 见 [WORKFORCE_PLATFORM.md](../WORKFORCE_PLATFORM.md)（固定 `bbfc56d`）。
+- **依赖 sibling `workforce-platform` 检出** — 见 [WORKFORCE_PLATFORM.md](../WORKFORCE_PLATFORM.md)（固定 `1b8df75`）。

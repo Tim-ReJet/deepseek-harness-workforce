@@ -34,7 +34,7 @@ The workforce group records Workforce-specific durable Session state — today, 
 
 - [Session subsystem](../../docs/subsystems/session.md) — the durable event log every package in this group appends to.
 - [Session projections subsystem](../../docs/subsystems/session-projection.md) — the `ctx.sessionProjections` fold this group's packages register against.
-- [Sibling `workforce-platform` checkout](WORKFORCE_PLATFORM.md) — `@reactorjet/workforce-contracts` and `@workforce/dsh-nono-bridge` link targets (pin `bbfc56d`).
+- [Sibling `workforce-platform` checkout](WORKFORCE_PLATFORM.md) — `@reactorjet/workforce-contracts` and `@workforce/dsh-nono-bridge` link targets (pin `1b8df75`).
 
 -----
 
