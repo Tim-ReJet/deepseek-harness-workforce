@@ -60,7 +60,6 @@ jobs:
         if: >-
           github.event_name == 'pull_request'
           && github.event.pull_request.base.ref == 'workforce/main'
-          && secrets.WORKFORCE_PLATFORM_CHECKOUT_TOKEN != ''
         with:
           token: ${{ secrets.WORKFORCE_PLATFORM_CHECKOUT_TOKEN }}
 
@@ -125,7 +124,6 @@ jobs:
         if: >-
           github.event_name == 'pull_request'
           && github.event.pull_request.base.ref == 'workforce/main'
-          && secrets.WORKFORCE_PLATFORM_CHECKOUT_TOKEN != ''
         with:
           token: ${{ secrets.WORKFORCE_PLATFORM_CHECKOUT_TOKEN }}
 
@@ -201,7 +199,6 @@ jobs:
         if: >-
           github.event_name == 'pull_request'
           && github.event.pull_request.base.ref == 'workforce/main'
-          && secrets.WORKFORCE_PLATFORM_CHECKOUT_TOKEN != ''
         with:
           token: ${{ secrets.WORKFORCE_PLATFORM_CHECKOUT_TOKEN }}
 
