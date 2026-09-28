@@ -23,4 +23,17 @@ runs:
 
     - name: Symlink sibling next to harness root
       shell: bash
-      run: ln -sfn "${{ github.workspace }}/workforce-platform" "${{ github.workspace }}/../workforce-platform"
+      run: |
+        set -euo pipefail
+        source="${{ github.workspace }}/workforce-platform"
+        target="${{ github.workspace }}/../workforce-platform"
+        if [ "$RUNNER_OS" = "Windows" ]; then
+          parent="$(dirname "$GITHUB_WORKSPACE")"
+          target="$parent/workforce-platform"
+          if [ -e "$target" ] || [ -L "$target" ]; then
+            rm -rf "$target"
+          fi
+          cmd //c "mklink /J \"$target\" \"$source\""
+        else
+          ln -sfn "$source" "$target"
+        fi
