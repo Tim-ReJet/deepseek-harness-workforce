@@ -1,0 +1,61 @@
+name: Workforce sibling verify
+
+on:
+  pull_request:
+    branches:
+      - workforce/main
+    paths:
+      - 'packages/workforce/**'
+      - 'packages/bundle/workforce-cell/**'
+      - '.github/workflows/workforce-sibling-verify.yml'
+
+permissions:
+  contents: read
+
+env:
+  WORKFORCE_PLATFORM_PIN: 1b8df75bee9b87c047c1ba929f26433d7c4b8845
+  PRIMARY_NODE_VERSION: '24'
+  DSH_TELEMETRY_DISABLED: '1'
+
+jobs:
+  tool-admission:
+    name: workforce-platform sibling / tool admission
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      # pnpm link: paths resolve to <parent-of-repo>/workforce-platform (see WORKFORCE_PLATFORM.md).
+      - name: Check out pinned workforce-platform sibling
+        uses: actions/checkout@v6
+        with:
+          repository: Tim-ReJet/workforce-platform
+          ref: ${{ env.WORKFORCE_PLATFORM_PIN }}
+          path: workforce-platform
+          token: ${{ secrets.WORKFORCE_PLATFORM_CHECKOUT_TOKEN || github.token }}
+
+      - name: Link sibling next to harness checkout
+        run: ln -sfn "${{ github.workspace }}/workforce-platform" "${{ github.workspace }}/../workforce-platform"
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.PRIMARY_NODE_VERSION }}
+
+      - name: Install harness (immutable)
+        run: pnpm install --frozen-lockfile
+
+      - name: Install workforce-platform workspace (linked packages only)
+        working-directory: workforce-platform
+        run: pnpm install --frozen-lockfile
+
+      - name: Tool admission and workforce-cell startup tests
+        run: >-
+          pnpm exec vitest run
+          packages/workforce/tool-admission/tests/tool-admission.spec.ts
+          packages/bundle/workforce-cell/tests/startup.spec.ts
+
+      - name: Host TypeScript build
+        run: pnpm exec tsc -b tsconfig.host.json
