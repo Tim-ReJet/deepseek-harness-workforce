@@ -14,13 +14,13 @@ Package manifests use `link:../../../../workforce-platform/packages/...` (four l
 
 ## Pin
 
-Check out workforce-platform at merge commit **`1b8df75bee9b87c047c1ba929f26433d7c4b8845`** (workforce-platform PR **#166**, ordinary execution runtime on `main`) before `pnpm install` or running Workforce unit tests.
+Check out workforce-platform at merge commit **`bbfc56d56271aee7153b8021bbabd6ac01866166`** (workforce-platform `main` tip after PR **#166** / **#168**) before `pnpm install` or running Workforce unit tests.
 
 ```sh
 cd ..
 git clone https://github.com/Tim-ReJet/workforce-platform.git
 cd workforce-platform
-git checkout 1b8df75bee9b87c047c1ba929f26433d7c4b8845
+git checkout bbfc56d56271aee7153b8021bbabd6ac01866166
 cd ../deepseek-harness-workforce
 pnpm install
 cd ../workforce-platform && pnpm install

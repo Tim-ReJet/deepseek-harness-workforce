@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 env:
-  WORKFORCE_PLATFORM_PIN: 1b8df75bee9b87c047c1ba929f26433d7c4b8845
+  WORKFORCE_PLATFORM_PIN: bbfc56d56271aee7153b8021bbabd6ac01866166
   PRIMARY_NODE_VERSION: '24'
   DSH_TELEMETRY_DISABLED: '1'
 
@@ -33,7 +33,7 @@ jobs:
           repository: Tim-ReJet/workforce-platform
           ref: ${{ env.WORKFORCE_PLATFORM_PIN }}
           path: workforce-platform
-          token: ${{ secrets.WORKFORCE_PLATFORM_CHECKOUT_TOKEN || github.token }}
+          token: ${{ secrets.WORKFORCE_PLATFORM_CHECKOUT_TOKEN != '' && secrets.WORKFORCE_PLATFORM_CHECKOUT_TOKEN || github.token }}
 
       - name: Link sibling next to harness checkout
         run: ln -sfn "${{ github.workspace }}/workforce-platform" "${{ github.workspace }}/../workforce-platform"

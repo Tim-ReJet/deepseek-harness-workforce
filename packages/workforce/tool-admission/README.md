@@ -26,7 +26,7 @@ Denied calls return `Error: Workforce tool admission denied: …` as the tool re
 ## Known Limitations and Deferred Work
 
 - **Projections are config-owned**, not yet read from ToolDefinition metadata; expand the projection table as tools ship on the Cell profile.
-- **Requires a sibling `workforce-platform` checkout** — see [WORKFORCE_PLATFORM.md](../WORKFORCE_PLATFORM.md) (`1b8df75` pin).
+- **Requires a sibling `workforce-platform` checkout** — see [WORKFORCE_PLATFORM.md](../WORKFORCE_PLATFORM.md) (`bbfc56d` pin).
 
 ## Dev Note
 

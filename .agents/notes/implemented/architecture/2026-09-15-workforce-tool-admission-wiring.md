@@ -2,7 +2,7 @@
 
 ## Decision
 
-Cell DSH must not invoke tools before plan 16's permit check. The harness owns projection from `ToolExecution` to `ActionIntent` plus a `tools/pre-execute` listener that calls `@workforce/dsh-nono-bridge` **`checkActionIntentWithOwnedPaths` only** when admission is enabled; missing sealed `DelegationPlan` or `workerId` denies (ADR-029 — no manifest-only `checkActionIntent` fallback). Denial returns a structured pre-execute failure without running the tool body. Sibling pin tracks workforce-platform `main` (post PR #160 supervisor seam, currently `1b8df75` / PR #166); this package is the in-process executor wiring only.
+Cell DSH must not invoke tools before plan 16's permit check. The harness owns projection from `ToolExecution` to `ActionIntent` plus a `tools/pre-execute` listener that calls `@workforce/dsh-nono-bridge` **`checkActionIntentWithOwnedPaths` only** when admission is enabled; missing sealed `DelegationPlan` or `workerId` denies (ADR-029 — no manifest-only `checkActionIntent` fallback). Denial returns a structured pre-execute failure without running the tool body. Sibling pin tracks workforce-platform `main` (post PR #160 supervisor seam; verify at `bbfc56d` on `main` after PR #166/#168); this package is the in-process executor wiring only.
 
 ## Constraints honored
 
@@ -14,4 +14,4 @@ Cell DSH must not invoke tools before plan 16's permit check. The harness owns p
 
 - `packages/workforce/tool-admission/tests/tool-admission.spec.ts` — allow on granted manifest + plan; deny on missing capability, unmapped semantic action, off-ownedPaths write, unlisted tool, missing pathArgument, missing plan/workerId.
 - `packages/bundle/workforce-cell/tests/startup.spec.ts` — loader boot plus pre-execute deny when plan/workerId unset.
-- Sibling checkout: [packages/workforce/WORKFORCE_PLATFORM.md](../../../packages/workforce/WORKFORCE_PLATFORM.md) (`1b8df75`).
+- Sibling checkout: [packages/workforce/WORKFORCE_PLATFORM.md](../../../packages/workforce/WORKFORCE_PLATFORM.md) (`bbfc56d`).
