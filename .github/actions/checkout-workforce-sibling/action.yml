@@ -1,5 +1,5 @@
 name: Checkout workforce-platform sibling
-description: Clone the pinned workforce-platform repo and symlink it for pnpm link dependencies.
+description: "Clone the pinned workforce-platform repo and symlink it for pnpm link: dependencies."
 
 inputs:
   token:
