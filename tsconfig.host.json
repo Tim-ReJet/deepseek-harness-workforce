@@ -119,7 +119,8 @@
     "scripts/client-bundle-css.spec.ts",
     "packages/typert/generator/tests/fixtures/**",
     "scripts/client-bundle-purity.spec.ts",
-    "packages/workforce/tool-admission/tests/**"
+    "packages/workforce/tool-admission/tests/**",
+    "packages/workforce/execution-cell/tests/**"
   ],
   "references": [
     { "path": "./vendor/cosmokit" },
@@ -285,6 +286,7 @@
     { "path": "./packages/bundle/workforce-global" },
     { "path": "./packages/workforce/session-events" },
     { "path": "./packages/workforce/tool-admission" },
+    { "path": "./packages/workforce/execution-cell" },
     { "path": "./packages/boot/app-boot" },
     { "path": "./packages/boot/cmdline" },
     { "path": "./packages/sdk/server" },

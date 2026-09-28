@@ -46,6 +46,7 @@
     "@deepseek-ai/dsh-base": "workspace:^",
     "@deepseek-ai/dsh-headless": "workspace:^",
     "@deepseek-ai/dsh-workforce-tool-admission": "workspace:^",
+    "@deepseek-ai/dsh-workforce-execution-cell": "workspace:^",
     "js-yaml": "^4.2.0",
     "tsx": "^4.22.4"
   }
