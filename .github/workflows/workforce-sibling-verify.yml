@@ -8,12 +8,13 @@ on:
       - 'packages/workforce/**'
       - 'packages/bundle/workforce-cell/**'
       - '.github/workflows/workforce-sibling-verify.yml'
+      - '.github/actions/checkout-workforce-sibling/**'
+      - '.github/workforce-platform-pin'
 
 permissions:
   contents: read
 
 env:
-  WORKFORCE_PLATFORM_PIN: bbfc56d56271aee7153b8021bbabd6ac01866166
   PRIMARY_NODE_VERSION: '24'
   DSH_TELEMETRY_DISABLED: '1'
 
@@ -22,21 +23,19 @@ jobs:
     name: workforce-platform sibling / tool admission
     runs-on: ubuntu-latest
     steps:
+      - name: Require cross-repo checkout token
+        if: secrets.WORKFORCE_PLATFORM_CHECKOUT_TOKEN == ''
+        run: |
+          echo "::error::Set repository secret WORKFORCE_PLATFORM_CHECKOUT_TOKEN (read access to Tim-ReJet/workforce-platform). See packages/workforce/WORKFORCE_PLATFORM.md."
+          exit 1
+
       - uses: actions/checkout@v6
         with:
           persist-credentials: false
 
-      # pnpm link: paths resolve to <parent-of-repo>/workforce-platform (see WORKFORCE_PLATFORM.md).
-      - name: Check out pinned workforce-platform sibling
-        uses: actions/checkout@v6
+      - uses: ./.github/actions/checkout-workforce-sibling
         with:
-          repository: Tim-ReJet/workforce-platform
-          ref: ${{ env.WORKFORCE_PLATFORM_PIN }}
-          path: workforce-platform
-          token: ${{ secrets.WORKFORCE_PLATFORM_CHECKOUT_TOKEN != '' && secrets.WORKFORCE_PLATFORM_CHECKOUT_TOKEN || github.token }}
-
-      - name: Link sibling next to harness checkout
-        run: ln -sfn "${{ github.workspace }}/workforce-platform" "${{ github.workspace }}/../workforce-platform"
+          token: ${{ secrets.WORKFORCE_PLATFORM_CHECKOUT_TOKEN }}
 
       - uses: pnpm/action-setup@v4
 
@@ -47,7 +46,7 @@ jobs:
       - name: Install harness (immutable)
         run: pnpm install --frozen-lockfile
 
-      - name: Install workforce-platform workspace (linked packages only)
+      - name: Install workforce-platform workspace
         working-directory: workforce-platform
         run: pnpm install --frozen-lockfile
 

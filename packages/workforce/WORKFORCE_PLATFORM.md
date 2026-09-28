@@ -28,3 +28,9 @@ cd ../deepseek-harness-workforce
 ```
 
 Do not commit a partial `workforce-platform/` tree into the harness repository.
+
+## Pin in CI
+
+The canonical pin for GitHub Actions is [`.github/workforce-platform-pin`](../../.github/workforce-platform-pin) (keep in sync with this doc when advancing `main`).
+
+Pull requests into `workforce/main` need repository secret **`WORKFORCE_PLATFORM_CHECKOUT_TOKEN`**: a PAT with read access to `Tim-ReJet/workforce-platform`. The composite action [`.github/actions/checkout-workforce-sibling`](../../.github/actions/checkout-workforce-sibling) clones that ref and symlinks `../workforce-platform` for `link:` resolution. Without the secret, `pnpm install` succeeds but host `tsc` and Workforce tests cannot resolve `@reactorjet/workforce-contracts` / `@workforce/*`.

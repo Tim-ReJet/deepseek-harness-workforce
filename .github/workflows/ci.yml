@@ -56,6 +56,14 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
+      - uses: ./.github/actions/checkout-workforce-sibling
+        if: >-
+          github.event_name == 'pull_request'
+          && github.event.pull_request.base.ref == 'workforce/main'
+          && secrets.WORKFORCE_PLATFORM_CHECKOUT_TOKEN != ''
+        with:
+          token: ${{ secrets.WORKFORCE_PLATFORM_CHECKOUT_TOKEN }}
+
       - uses: pnpm/action-setup@v4
         with:
           dest: ${{ runner.temp }}/setup-pnpm-${{ github.run_id }}-${{ github.run_attempt }}
@@ -112,6 +120,14 @@ jobs:
       - uses: actions/checkout@v6
         with:
           persist-credentials: false
+
+      - uses: ./.github/actions/checkout-workforce-sibling
+        if: >-
+          github.event_name == 'pull_request'
+          && github.event.pull_request.base.ref == 'workforce/main'
+          && secrets.WORKFORCE_PLATFORM_CHECKOUT_TOKEN != ''
+        with:
+          token: ${{ secrets.WORKFORCE_PLATFORM_CHECKOUT_TOKEN }}
 
       - uses: pnpm/action-setup@v4
         with:
@@ -180,6 +196,14 @@ jobs:
       - uses: actions/checkout@v6
         with:
           persist-credentials: false
+
+      - uses: ./.github/actions/checkout-workforce-sibling
+        if: >-
+          github.event_name == 'pull_request'
+          && github.event.pull_request.base.ref == 'workforce/main'
+          && secrets.WORKFORCE_PLATFORM_CHECKOUT_TOKEN != ''
+        with:
+          token: ${{ secrets.WORKFORCE_PLATFORM_CHECKOUT_TOKEN }}
 
       - uses: pnpm/action-setup@v4
         with:
