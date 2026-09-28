@@ -80,6 +80,8 @@ const OVERRIDES: Record<string, { license?: string; repo?: string }> = {
   // consumed via a `link:` dependency, DSH-002) — no npm `license` field and
   // no public repository; its owning workspace root declares ISC.
   '@reactorjet/workforce-contracts': { license: 'ISC', repo: 'private — workforce-platform/packages/contracts (not publicly published)' },
+  '@workforce/dsh-nono-bridge': { license: 'ISC', repo: 'private — workforce-platform/packages/dsh-nono-bridge (not publicly published)' },
+  '@workforce/permit-compiler': { license: 'ISC', repo: 'private — workforce-platform/packages/permit-compiler (not publicly published)' },
 }
 
 /**
