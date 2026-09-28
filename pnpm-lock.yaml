@@ -1721,9 +1721,15 @@ importers:
       '@deepseek-ai/dsh-headless':
         specifier: workspace:^
         version: link:../headless
+      '@deepseek-ai/dsh-workforce-tool-admission':
+        specifier: workspace:^
+        version: link:../../workforce/tool-admission
       js-yaml:
         specifier: ^4.2.0
         version: 4.3.1
+      tsx:
+        specifier: ^4.22.4
+        version: 4.22.4
 
   packages/bundle/workforce-global:
     dependencies:
@@ -9932,6 +9938,37 @@ importers:
       '@deepseek-ai/dsh-session-projection':
         specifier: workspace:^
         version: link:../../session/session-projection
+
+  packages/workforce/tool-admission:
+    dependencies:
+      '@deepseek-ai/schemastery':
+        specifier: link:../../../vendor/schemastery
+        version: link:../../../vendor/schemastery
+      '@reactorjet/workforce-contracts':
+        specifier: link:../../../../workforce-platform/packages/contracts
+        version: link:../../../../workforce-platform/packages/contracts
+      '@workforce/dsh-nono-bridge':
+        specifier: link:../../../../workforce-platform/packages/dsh-nono-bridge
+        version: link:../../../../workforce-platform/packages/dsh-nono-bridge
+      '@workforce/permit-compiler':
+        specifier: link:../../../../workforce-platform/packages/permit-compiler
+        version: link:../../../../workforce-platform/packages/permit-compiler
+    devDependencies:
+      '@deepseek-ai/cordis':
+        specifier: workspace:^
+        version: link:../../../vendor/cordis
+      '@deepseek-ai/dsh-agent-loop-testkit':
+        specifier: workspace:^
+        version: link:../../test-support/agent-loop-testkit
+      '@deepseek-ai/dsh-llm':
+        specifier: workspace:^
+        version: link:../../llm/llm
+      '@deepseek-ai/dsh-session':
+        specifier: workspace:^
+        version: link:../../core/session
+      '@deepseek-ai/dsh-tools':
+        specifier: workspace:^
+        version: link:../../core/tools
 
   packages/workspace/workspace:
     dependencies:

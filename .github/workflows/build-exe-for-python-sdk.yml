@@ -30,6 +30,9 @@ on:
       DEEPSEEK_API_KEY_EXTERNAL:
         description: Real DeepSeek API key for trusted installed-wheel pull-request tests.
         required: false
+      WORKFORCE_PLATFORM_CHECKOUT_TOKEN:
+        description: PAT to clone the pinned workforce-platform sibling for link dependencies.
+        required: false
   workflow_dispatch:
     inputs:
       targets:
@@ -159,16 +162,24 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@v4
-        with:
-          dest: ${{ runner.temp }}/setup-pnpm-js-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}
-
       - name: Enable Windows Developer Mode (symlink support)
         if: runner.os == 'Windows'
         shell: pwsh
         run: >-
           reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock"
           /t REG_DWORD /f /v "AllowDevelopmentWithoutDevLicense" /d "1"
+
+      - uses: ./.github/actions/checkout-workforce-sibling
+        if: >-
+          inputs.ci
+          && github.event_name == 'pull_request'
+          && github.event.pull_request.base.ref == 'workforce/main'
+        with:
+          token: ${{ secrets.WORKFORCE_PLATFORM_CHECKOUT_TOKEN }}
+
+      - uses: pnpm/action-setup@v4
+        with:
+          dest: ${{ runner.temp }}/setup-pnpm-js-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}
 
       # setup-node's built-in pnpm store cache keys on platform AND arch, so
       # the Linux architectures sharing runner.os stay on separate caches.
@@ -195,6 +206,12 @@ jobs:
 
       - name: Install (immutable)
         run: pnpm install --frozen-lockfile
+
+      - uses: ./.github/actions/install-workforce-platform-sibling
+        if: >-
+          inputs.ci
+          && github.event_name == 'pull_request'
+          && github.event.pull_request.base.ref == 'workforce/main'
 
       - name: Rebuild Linux node-pty against manylinux 2.28
         if: runner.os == 'Linux'

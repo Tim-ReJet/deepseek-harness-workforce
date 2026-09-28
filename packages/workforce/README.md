@@ -25,6 +25,7 @@ The workforce group records Workforce-specific durable Session state — today, 
 | Package | Role | ctx key |
 |---|---|---|
 | [`session-events`](session-events/README.md) | Durable `workforce/workorder-bound` SessionEvent and its `workforceSessionBinding` projection | registers on `ctx.sessionProjections` |
+| [`tool-admission`](tool-admission/README.md) | In-process tool-call → ActionIntent projection and `@workforce/dsh-nono-bridge` pre-execute admission | `tools/pre-execute` listener |
 
 -----
 
@@ -33,7 +34,7 @@ The workforce group records Workforce-specific durable Session state — today, 
 
 - [Session subsystem](../../docs/subsystems/session.md) — the durable event log every package in this group appends to.
 - [Session projections subsystem](../../docs/subsystems/session-projection.md) — the `ctx.sessionProjections` fold this group's packages register against.
-- [`@reactorjet/workforce-contracts`](../../../workforce-platform/packages/contracts) — the canonical WorkOrder and execution-profile schemas this group's packages reference, never redeclare.
+- [Sibling `workforce-platform` checkout](WORKFORCE_PLATFORM.md) — `@reactorjet/workforce-contracts` and `@workforce/dsh-nono-bridge` link targets (pin `1b8df75`).
 
 -----
 

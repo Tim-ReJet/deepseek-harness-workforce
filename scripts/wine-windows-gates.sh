@@ -153,6 +153,19 @@ snapshot_and_install() {
     | while IFS= read -r -d '' file; do [ -e "$repo_root/$file" ] && printf '%s\0' "$file"; done \
     | tar -C "$repo_root" --null --files-from=- -cf - \
     | tar -C "$scratch/tree" -xf -
+  wp_src=''
+  if [ -d "$repo_root/../workforce-platform/packages" ]; then
+    wp_src="$(cd "$repo_root/../workforce-platform" && pwd)"
+  elif [ -d "$repo_root/workforce-platform/packages" ]; then
+    wp_src="$repo_root/workforce-platform"
+  fi
+  if [ -n "$wp_src" ]; then
+    mkdir -p "$scratch/workforce-platform"
+    tar -C "$wp_src" -cf - . | tar -C "$scratch/workforce-platform" -xf -
+    (cd "$scratch/workforce-platform" && pnpm install --frozen-lockfile --ignore-scripts \
+      > "$scratch/logs/workforce-platform-install.log" 2>&1) \
+      || { tail -40 "$scratch/logs/workforce-platform-install.log" >&2; return 1; }
+  fi
   cat >> "$scratch/tree/pnpm-workspace.yaml" << 'EOF'
 
 nodeLinker: hoisted

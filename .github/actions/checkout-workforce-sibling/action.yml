@@ -1,0 +1,36 @@
+name: Checkout workforce-platform sibling
+description: Clone the pinned workforce-platform repo and symlink it for pnpm link dependencies.
+
+inputs:
+  token:
+    description: PAT with read access to Tim-ReJet/workforce-platform
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Read workforce-platform pin
+      id: pin
+      shell: bash
+      run: echo "sha=$(tr -d '[:space:]' < "${{ github.workspace }}/.github/workforce-platform-pin")" >> "$GITHUB_OUTPUT"
+
+    - uses: actions/checkout@v6
+      with:
+        repository: Tim-ReJet/workforce-platform
+        ref: ${{ steps.pin.outputs.sha }}
+        path: workforce-platform
+        token: ${{ inputs.token }}
+
+    - name: Symlink sibling next to harness root (Windows)
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: |
+        $source = Join-Path $env:GITHUB_WORKSPACE 'workforce-platform'
+        $target = Join-Path (Split-Path $env:GITHUB_WORKSPACE -Parent) 'workforce-platform'
+        if (Test-Path $target) { Remove-Item -Force -Recurse $target }
+        New-Item -ItemType Junction -Path $target -Target $source | Out-Null
+
+    - name: Symlink sibling next to harness root (Unix)
+      if: runner.os != 'Windows'
+      shell: bash
+      run: ln -sfn "${{ github.workspace }}/workforce-platform" "${{ github.workspace }}/../workforce-platform"

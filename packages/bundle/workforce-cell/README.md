@@ -9,7 +9,7 @@ English | [中文](README.zh.md)
 
 ## Summary
 
-`dsh-workforce-cell` is the third bundle layer of the shipped `workforce-cell` profile, stacked over `@deepseek-ai/dsh-base` and `@deepseek-ai/dsh-headless` (a disposable Cell answers one delegated task and exits, so the one-shot headless runner — not the persistent Web/HTTP host — is the closest existing shipped shape to "Cell DSH essentials"). It is currently empty — a real, named, bootable layer with no rows of its own — so `dsh --profile workforce-cell` composes and boots today, before any Cell-owned plugin exists to populate it. Later Cell tasks add their own rows to this bundle's `cordis.patch.yml` as those plugins land (`@workforce/execution-cell`'s Task/Gate/Loop runtime, then the ActionIntent-to-nono bridge). You rarely touch this bundle directly; it is not a library you import.
+`dsh-workforce-cell` is the third bundle layer of the shipped `workforce-cell` profile, stacked over `@deepseek-ai/dsh-base` and `@deepseek-ai/dsh-headless` (a disposable Cell answers one delegated task and exits, so the one-shot headless runner — not the persistent Web/HTTP host — is the closest existing shipped shape to "Cell DSH essentials"). Its patch mounts `@deepseek-ai/dsh-workforce-tool-admission` so each tool call is projected to a Workforce `ActionIntent` and admitted through `@workforce/dsh-nono-bridge` before the tool body runs (plan 16 in-process seam). You rarely touch this bundle directly; it is not a library you import.
 
 ## Table of Contents
 
@@ -38,9 +38,9 @@ In-box bundles resolve from the dsh installation. A profile that lists this bund
 
 ### What you get
 
-Nothing yet. Today's patch (`cordis.patch.yml`) is an empty insert list: every observable behavior of the `workforce-cell` profile comes from `dsh-base` and `dsh-headless` alone. This bundle exists so the profile has a stable, named third layer for later Cell plugins to stack rows onto, without every one of those tasks also needing to invent the profile itself.
+Tool-call admission before dispatch: the patch configures `@deepseek-ai/dsh-workforce-tool-admission` with the Cell's compiled `CapabilityManifest`, optional sealed `DelegationPlan` + `workerId`, WorkOrder/run/cell/task ids, and a tool-name → ActionIntent projection map (typically from `WORKFORCE_CELL_*` env vars at launcher boot). Unmapped tools and bridge denials fail closed in `tools/pre-execute` with a structured reason; allowed calls proceed to the normal DSH tool executor. Core agent, session, and headless runner behavior still comes from `dsh-base` and `dsh-headless`.
 
-This bundle is deliberately nono-oblivious: ADR-006 encloses Cell DSH with nono as an external process boundary (PID 1 / supervisor), not a library the Cell links against, so this package holds no nono-specific code, no capability-manifest, permit, or credential logic, and no signing code of its own — enclosure and admission are external to it by design.
+This bundle stays nono-oblivious at the bundle layer: ADR-006 keeps live nono as an external supervisor boundary; in-process admission compares against manifest and sealed ownedPaths only and does not call MCP or widen permits from board wake traffic.
 
 -----
 

@@ -1,0 +1,17 @@
+name: Install workforce-platform sibling workspace
+description: Run pnpm install in the cloned workforce-platform tree for link dependencies.
+
+runs:
+  using: composite
+  steps:
+    - name: Install workforce-platform workspace (Windows)
+      if: runner.os == 'Windows'
+      shell: pwsh
+      working-directory: workforce-platform
+      run: pnpm install --frozen-lockfile
+
+    - name: Install workforce-platform workspace (Unix)
+      if: runner.os != 'Windows'
+      shell: bash
+      working-directory: workforce-platform
+      run: pnpm install --frozen-lockfile

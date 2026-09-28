@@ -1,0 +1,47 @@
+{
+  "name": "@deepseek-ai/dsh-workforce-tool-admission",
+  "description": "Workforce Cell tool-call admission: ToolDefinition projection to ActionIntent, then @workforce/dsh-nono-bridge permit and ownedPaths checks before dispatch",
+  "version": "0.1.3-alpha.1",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "directory": "packages/workforce/tool-admission"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@deepseek-ai/dsh-tools": "workspace:^",
+    "@deepseek-ai/cordis": "workspace:^"
+  },
+  "dependencies": {
+    "@deepseek-ai/schemastery": "workspace:^",
+    "@reactorjet/workforce-contracts": "link:../../../../workforce-platform/packages/contracts",
+    "@workforce/dsh-nono-bridge": "link:../../../../workforce-platform/packages/dsh-nono-bridge",
+    "@workforce/permit-compiler": "link:../../../../workforce-platform/packages/permit-compiler"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "workspace:^",
+    "@deepseek-ai/dsh-agent-loop-testkit": "workspace:^",
+    "@deepseek-ai/dsh-llm": "workspace:^",
+    "@deepseek-ai/dsh-tools": "workspace:^",
+    "@deepseek-ai/dsh-session": "workspace:^"
+  }
+}
