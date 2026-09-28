@@ -4,7 +4,14 @@ description: Run pnpm install in the cloned workforce-platform tree for link dep
 runs:
   using: composite
   steps:
-    - name: Install workforce-platform workspace
+    - name: Install workforce-platform workspace (Windows)
+      if: runner.os == 'Windows'
+      shell: pwsh
+      working-directory: workforce-platform
+      run: pnpm install --frozen-lockfile
+
+    - name: Install workforce-platform workspace (Unix)
+      if: runner.os != 'Windows'
       shell: bash
       working-directory: workforce-platform
       run: pnpm install --frozen-lockfile

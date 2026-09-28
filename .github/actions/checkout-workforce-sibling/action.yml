@@ -21,19 +21,16 @@ runs:
         path: workforce-platform
         token: ${{ inputs.token }}
 
-    - name: Symlink sibling next to harness root
-      shell: bash
+    - name: Symlink sibling next to harness root (Windows)
+      if: runner.os == 'Windows'
+      shell: pwsh
       run: |
-        set -euo pipefail
-        source="${{ github.workspace }}/workforce-platform"
-        target="${{ github.workspace }}/../workforce-platform"
-        if [ "$RUNNER_OS" = "Windows" ]; then
-          parent="$(dirname "$GITHUB_WORKSPACE")"
-          target="$parent/workforce-platform"
-          if [ -e "$target" ] || [ -L "$target" ]; then
-            rm -rf "$target"
-          fi
-          cmd //c "mklink /J \"$target\" \"$source\""
-        else
-          ln -sfn "$source" "$target"
-        fi
+        $source = Join-Path $env:GITHUB_WORKSPACE 'workforce-platform'
+        $target = Join-Path (Split-Path $env:GITHUB_WORKSPACE -Parent) 'workforce-platform'
+        if (Test-Path $target) { Remove-Item -Force -Recurse $target }
+        New-Item -ItemType Junction -Path $target -Target $source | Out-Null
+
+    - name: Symlink sibling next to harness root (Unix)
+      if: runner.os != 'Windows'
+      shell: bash
+      run: ln -sfn "${{ github.workspace }}/workforce-platform" "${{ github.workspace }}/../workforce-platform"
