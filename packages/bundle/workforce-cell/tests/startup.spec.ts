@@ -67,8 +67,13 @@ describe('dsh-workforce-cell bundle', () => {
 
     const patches = loadPatches(cellPatchPath)
     expect(patches).toHaveLength(1)
-    expect(patches[0]).toMatchObject({
-      insert: [{ id: 'workforce-tool-admission', name: '@deepseek-ai/dsh-workforce-tool-admission' }],
+    const insert = patches[0]?.insert ?? []
+    expect(insert).toHaveLength(2)
+    expect(insert.find(row => row.id === 'workforce-tool-admission')).toMatchObject({
+      name: '@deepseek-ai/dsh-workforce-tool-admission',
+    })
+    expect(insert.find(row => row.id === 'workforce-execution-cell')).toMatchObject({
+      name: '@deepseek-ai/dsh-workforce-execution-cell',
     })
   })
 
@@ -79,11 +84,15 @@ describe('dsh-workforce-cell bundle', () => {
     const baseThenHeadless = composeEntries([basePatches, headlessPatches])
     const baseThenHeadlessThenCell = composeEntries([basePatches, headlessPatches, cellPatches])
     expect(baseThenHeadless.length).toBeGreaterThan(50)
-    expect(baseThenHeadlessThenCell.length).toBe(baseThenHeadless.length + 1)
+    expect(baseThenHeadlessThenCell.length).toBe(baseThenHeadless.length + 2)
     expect(baseThenHeadlessThenCell.slice(0, baseThenHeadless.length)).toEqual(baseThenHeadless)
-    expect(baseThenHeadlessThenCell.at(-1)).toMatchObject({
+    expect(baseThenHeadlessThenCell.at(-2)).toMatchObject({
       id: 'workforce-tool-admission',
       name: '@deepseek-ai/dsh-workforce-tool-admission',
+    })
+    expect(baseThenHeadlessThenCell.at(-1)).toMatchObject({
+      id: 'workforce-execution-cell',
+      name: '@deepseek-ai/dsh-workforce-execution-cell',
     })
   })
 
@@ -108,6 +117,7 @@ describe('dsh-workforce-cell bundle', () => {
         'import Loader from \'@deepseek-ai/cordis-plugin-loader\'',
         'import Include, { entryListSchema } from \'@deepseek-ai/cordis-plugin-include\'',
         'import { mountAgentLoopTestDependencies } from \'@deepseek-ai/dsh-agent-loop-testkit\'',
+        'import WorkflowEngine, { WorkflowRunId } from \'@deepseek-ai/dsh-workflow\'',
         'import { ToolCallId } from \'@deepseek-ai/dsh-llm\'',
         'import { defineContentToolFixture } from \'@deepseek-ai/dsh-tools\'',
         'import { readFileSync } from \'node:fs\'',
@@ -122,8 +132,21 @@ describe('dsh-workforce-cell bundle', () => {
         'const cellPatchPath = process.argv[2]',
         'const cellPatches = yaml.load(readFileSync(cellPatchPath, \'utf8\'), { schema: entryListSchema })',
         '',
+        'class BootWorkflowEngine extends WorkflowEngine {',
+        '  start(request) {',
+        '    const id = WorkflowRunId(\'boot-workflow\')',
+        '    return {',
+        '      id,',
+        '      meta: request.meta,',
+        '      result: Promise.resolve({ value: request.args, stopReason: \'completed\', agentsStarted: 0 }),',
+        '      cancel() {},',
+        '      async dispose() {},',
+        '    }',
+        '  }',
+        '}',
         'const ctx = new Context()',
         'await mountAgentLoopTestDependencies(ctx)',
+        'await ctx.plugin(BootWorkflowEngine)',
         'await ctx.plugin(Loader)',
         'ctx.loader.builtins.include = Include',
         'await ctx.loader.create({',

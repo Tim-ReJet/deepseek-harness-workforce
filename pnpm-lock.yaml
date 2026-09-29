@@ -1721,6 +1721,9 @@ importers:
       '@deepseek-ai/dsh-headless':
         specifier: workspace:^
         version: link:../headless
+      '@deepseek-ai/dsh-workforce-execution-cell':
+        specifier: workspace:^
+        version: link:../../workforce/execution-cell
       '@deepseek-ai/dsh-workforce-tool-admission':
         specifier: workspace:^
         version: link:../../workforce/tool-admission
@@ -9913,6 +9916,25 @@ importers:
       tsx:
         specifier: ^4.19.2
         version: 4.22.4
+
+  packages/workforce/execution-cell:
+    dependencies:
+      '@reactorjet/workforce-contracts':
+        specifier: link:../../../../workforce-platform/packages/contracts
+        version: link:../../../../workforce-platform/packages/contracts
+      zod:
+        specifier: ^4.4.3
+        version: 4.4.3
+    devDependencies:
+      '@deepseek-ai/cordis':
+        specifier: workspace:^
+        version: link:../../../vendor/cordis
+      '@deepseek-ai/dsh-agent':
+        specifier: workspace:^
+        version: link:../../core/agent
+      '@deepseek-ai/dsh-workflow':
+        specifier: workspace:^
+        version: link:../../workflow/workflow
 
   packages/workforce/session-events:
     dependencies:

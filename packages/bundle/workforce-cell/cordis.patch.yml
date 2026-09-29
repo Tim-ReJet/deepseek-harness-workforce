@@ -28,3 +28,5 @@
         cellId: !!js "process.env.WORKFORCE_CELL_ID || '01JCELL0000000000000000000'"
         taskId: !!js "process.env.WORKFORCE_CELL_TASK_ID || '01JTASK0000000000000000000'"
         projections: !!js "process.env.WORKFORCE_CELL_TOOL_PROJECTIONS_JSON ? JSON.parse(process.env.WORKFORCE_CELL_TOOL_PROJECTIONS_JSON) : {}"
+    - id: workforce-execution-cell
+      name: '@deepseek-ai/dsh-workforce-execution-cell'
